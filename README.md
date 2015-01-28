@@ -17,9 +17,26 @@ automate what I do with them.
   "Creates an LXC"
 ```
 
-Creates an LXC. If a base LXC is provided, then it makes a clone of
-it. If a template is provided, then it creates a new LXC based on this
+Creates an LXC.
+
+If a base LXC is provided, then it makes a clone of it.
+
+If a template is provided, then it creates a new LXC based on this
 template.
+
+The opinionated part of lxc-wrapper comes here. For every new LXC:
+
+- It gives it a static IP
+- It adds the static IP to the host's /etc/hosts
+- It makes a symlink to the rootfs
+
+The symlink to the rootfs is created in the variable defined in
+`*lxc-folder*`. Which means you can change this folder like this:
+
+```lisp
+(let ((*lxc-folder* "~/lxc")) ; the default value
+  (create "foo"))
+```
 
 ### `start`
 

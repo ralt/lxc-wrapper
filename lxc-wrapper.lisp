@@ -2,6 +2,8 @@
 
 (in-package #:lxc-wrapper)
 
+(defvar *lxc-folder* "~/lxc/")
+
 ;;; "lxc-wrapper" goes here. Hacks and glory await!
 
 (defmacro run (&body command)
