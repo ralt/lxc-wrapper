@@ -2,7 +2,10 @@
 
 (in-package #:lxc-wrapper)
 
+(defvar *lxc-default-folder* "/var/lib/lxc/")
 (defvar *lxc-folder* "~/lxc/")
+(defvar *hosts-file* "/etc/hosts")
+(defvar *lxc-host-extension* ".lxc")
 
 ;;; "lxc-wrapper" goes here. Hacks and glory await!
 
@@ -23,7 +26,24 @@ defining this as a macro."
   "Initializes the LXC after creating it. It means:
 - Giving it a static IP
 - Adding the static IP to the host's /etc/hosts
-- Making a symlink to the rootfs somewhere")
+- Making a symlink to the rootfs somewhere"
+  (let ((ip (next-ip)))
+    (add-ip *hosts-file* ip (concatenate 'string name "." *lxc-host-extension*))
+    (make-symlink
+     (concatenate 'string *lxc-default-folder* name "/rootfs")
+     (concatenate 'string *lxc-folder* name))))
+
+(defun next-ip ()
+  "Finds the next available IP for the LXC")
+
+(defun add-ip (file ip extension)
+  "Adds the ip:extension pair to the hosts file")
+
+(defun make-symlink (base end)
+  "Makes a symlink from end to base"
+  (external-program:run
+   "ln"
+   '("-s" base end)))
 
 (defun create (name &key base template)
   "Creates an LXC"
