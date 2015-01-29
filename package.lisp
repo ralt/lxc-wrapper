@@ -3,6 +3,7 @@
 (defpackage #:lxc-wrapper
   (:use #:cl)
   (:export
+   :main
    ;; Functions
    :create :start :stop :ls :destroy
    ;; Variables
