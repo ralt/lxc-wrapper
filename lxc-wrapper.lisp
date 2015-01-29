@@ -10,12 +10,11 @@
 ;;; "lxc-wrapper" goes here. Hacks and glory await!
 
 (defmacro run (&body command)
-  "Runs a command using sudo. LXC requires sudo.
-To avoid having an awkward API (i.e. passing a list),
-defining this as a macro."
+  "Runs a command. To avoid having an awkward API
+ (i.e. passing a list), defining this as a macro."
   `(external-program:run
-     "sudo"
-     (list ,@command)
+     (car (list ,@command))
+     (cdr (list ,@command))
      :output *standard-output*
      ;; see man environ
      :environment (list (cons "SHELL" *default-shell*))))

@@ -2,7 +2,7 @@
 
 (defvar *hosts-file* #p"/etc/hosts")
 (defvar *lxc-network* '(10 0 3 0))
-(defvar *ip-regex* "(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
+(defvar *ip-regex* "^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
 
 (defun next-ip ()
   "Finds the next available IP for the LXC"
@@ -16,10 +16,10 @@
 	 when (line-matches-ip line)
 	 collect (line-get-ip line))))))
 
-(defun add-ip (file ip extension)
+(defun add-ip (file ip host)
   "Adds the ip:extension pair to the hosts file"
-  ;; @todo
-  )
+  (with-open-file (f file :direction :output :if-exists :append)
+    (format f "~%~A ~A~%" ip host)))
 
 (defun line-matches-ip (line)
   "Finds if the line matches an IP. Which means that
