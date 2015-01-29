@@ -2,10 +2,11 @@
 
 (in-package #:lxc-wrapper)
 
-(defvar *lxc-default-folder* "/var/lib/lxc/")
-(defvar *lxc-folder* "~/lxc/")
-(defvar *hosts-file* "/etc/hosts")
+(defvar *lxc-default-folder* #p"/var/lib/lxc/")
+(defvar *lxc-folder* (merge-pathnames #p"lxc/" (user-homedir-pathname)))
+(defvar *hosts-file* #p"/etc/hosts")
 (defvar *lxc-host-extension* ".lxc")
+(defvar *default-shell* #p"/bin/bash")
 
 ;;; "lxc-wrapper" goes here. Hacks and glory await!
 
@@ -18,7 +19,7 @@ defining this as a macro."
      (list ,@command)
      :output *standard-output*
      ;; see man environ
-     :environment '(("SHELL" . "/bin/bash"))))
+     :environment (list (cons "SHELL" *default-shell*))))
 
 (defun init-lxc (name)
   "Initializes the LXC after creating it. It means:
@@ -28,24 +29,14 @@ defining this as a macro."
   (let ((ip (next-ip)))
     (add-ip *hosts-file* ip (concatenate 'string name "." *lxc-host-extension*))
     (make-symlink
-     (concatenate 'string *lxc-default-folder* name "/rootfs")
-     (concatenate 'string *lxc-folder* name))))
-
-(defun next-ip ()
-  "Finds the next available IP for the LXC"
-  ;; @todo
-  )
-
-(defun add-ip (file ip extension)
-  "Adds the ip:extension pair to the hosts file"
-  ;; @todo
-  )
+     (merge-pathnames (merge-pathnames "rootfs" name) *lxc-default-folder*)
+     (merge-pathnames name *lxc-folder*))))
 
 (defun make-symlink (base end)
   "Makes a symlink from end to base"
-  (external-program:run
-   "ln"
-   '("-s" base end)))
+  (run
+    "ln"
+    "-s" base end))
 
 (defun create (name &key base template)
   "Creates an LXC"

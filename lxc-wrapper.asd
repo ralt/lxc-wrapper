@@ -7,4 +7,5 @@
   :serial t
   :depends-on ("external-program")
   :components ((:file "package")
+	       (:file "ip")
                (:file "lxc-wrapper")))
