@@ -101,7 +101,7 @@ iface eth0 inet static~%
 			      'string
 			      "\\d+\\.\\d+\\.\\d+\\.\\d+ "
 			      name
-			      "\\.lxc"
+			      "\\" *lxc-host-extension*
 			      "\\n")
 			     hosts
 			     "")
