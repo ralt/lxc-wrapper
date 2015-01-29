@@ -13,14 +13,12 @@
   "Runs a command using sudo. LXC requires sudo.
 To avoid having an awkward API (i.e. passing a list),
 defining this as a macro."
-  (let ((stream (gensym)))
-    `(with-output-to-string (,stream)
-       (external-program:run
-	 "sudo"
-	 (list ,@command)
-	 :output ,stream
-	 :environment '(("$PATH" . "/usr/bin")))
-       ,stream)))
+  `(external-program:run
+     "sudo"
+     (list ,@command)
+     :output *standard-output*
+     ;; see man environ
+     :environment '(("SHELL" . "/bin/bash"))))
 
 (defun init-lxc (name)
   "Initializes the LXC after creating it. It means:
@@ -94,6 +92,6 @@ defining this as a macro."
 (defun adapt-arg (name)
   "Adapts an argument to string"
   (when (symbolp name)
-    (string-downcase (symbol-name name)))
+    (return-from adapt-arg (string-downcase (symbol-name name))))
   (when (stringp name)
-    (string-downcase name)))
+    (return-from adapt-arg (string-downcase name))))
