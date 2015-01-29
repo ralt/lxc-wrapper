@@ -3,6 +3,7 @@
 (defvar *hosts-file* #p"/etc/hosts")
 (defvar *lxc-network* '(10 0 3 0))
 (defvar *ip-regex* "^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
+(defvar *lxc-interfaces-file* #p"etc/network/interfaces")
 
 (defun next-ip ()
   "Finds the next available IP for the LXC"
@@ -65,3 +66,27 @@ the line must starts with an IP address."
 		 (if (= counter place)
 		     number
 		     i)))))
+
+(defun assign-static-ip (name ip gateway dns)
+  "Assigns a static IP to an LXC"
+  ;; @todo
+  (let ((path (path-lxc-interfaces name)))
+    (delete-file path)
+    (with-open-file (file path :if-does-not-exist :create)
+      (format file "
+auto lo~%
+iface lo inet loopback~%
+~%
+auto eth0~%
+iface eth0 inet static~%
+~Taddress ~A~%
+~Tgateway ~A~%
+~Tdns-nameserver ~A~%" ip gateway dns))))
+
+(defun path-lxc-interfaces (name)
+  "Returns the path to the LXC interfaces file"
+  (merge-pathnames
+   *lxc-interfaces-file*
+   (merge-pathnames
+    *lxc-rootfs*
+    (merge-pathnames name *lxc-default-folder*))))
