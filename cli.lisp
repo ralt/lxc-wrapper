@@ -31,8 +31,10 @@ Commands:
 ~Tcreate NAME
 ~T~Tcreates a container named NAME
 ~T~TArguments:
-~T~T~T--base=BASE~Tclone BASE
-~T~T~T--template=TEMPLATE~Tuse the TEMPLATE lxc template
+~T~T~T--base=BASE
+~T~T~T~Tclone BASE
+~T~T~T--template=TEMPLATE
+~T~T~T~Tuse the TEMPLATE lxc template
 
 ~Tstart NAME
 ~T~Tstarts the container named NAME
