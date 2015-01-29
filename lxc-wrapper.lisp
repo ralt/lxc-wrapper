@@ -32,10 +32,14 @@ defining this as a macro."
      (concatenate 'string *lxc-folder* name))))
 
 (defun next-ip ()
-  "Finds the next available IP for the LXC")
+  "Finds the next available IP for the LXC"
+  ;; @todo
+  )
 
 (defun add-ip (file ip extension)
-  "Adds the ip:extension pair to the hosts file")
+  "Adds the ip:extension pair to the hosts file"
+  ;; @todo
+  )
 
 (defun make-symlink (base end)
   "Makes a symlink from end to base"
@@ -88,6 +92,21 @@ defining this as a macro."
   (run
    "lxc-ls"
    "--fancy"))
+
+(defun destroy (name)
+  "Destroys an LXC and its leftovers"
+  (let ((cli-name (adapt-arg name)))
+    (run
+      "lxc-destroy"
+      "--name" cli-name)
+    (remove-lxc-leftovers cli-name)))
+
+(defun remove-lxc-leftovers (name)
+  "Removes the leftovers such as:
+- The IP in /etc/hosts
+- The symbolic link to the now-missing rootfs"
+  ;; @todo
+  )
 
 (defun adapt-arg (name)
   "Adapts an argument to string"

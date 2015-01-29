@@ -2,4 +2,4 @@
 
 (defpackage #:lxc-wrapper
   (:use #:cl)
-  (:export :create :start :stop :ls))
+  (:export :create :start :stop :ls :destroy))
