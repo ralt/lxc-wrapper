@@ -8,4 +8,5 @@
   :depends-on ("external-program" "cl-ppcre")
   :components ((:file "package")
 	       (:file "ip")
+	       (:file "lxc")
                (:file "lxc-wrapper")))

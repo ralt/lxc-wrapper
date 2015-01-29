@@ -1,16 +1,6 @@
-;;;; lxc-wrapper.lisp
-
 (in-package #:lxc-wrapper)
 
-(defvar *lxc-default-folder* #p"/var/lib/lxc/")
-(defvar *lxc-rootfs* #p"rootfs")
-(defvar *lxc-folder* (merge-pathnames #p"lxc/" (user-homedir-pathname)))
-(defvar *lxc-host-extension* ".lxc")
 (defvar *default-shell* #p"/bin/bash")
-(defvar *lxc-gateway* "10.0.3.1")
-(defvar *default-dns-nameserver* "8.8.8.8")
-
-;;; "lxc-wrapper" goes here. Hacks and glory await!
 
 (defmacro run (&body command)
   "Runs a command. To avoid having an awkward API
@@ -21,24 +11,6 @@
      :output *standard-output*
      ;; see man environ
      :environment (list (cons "SHELL" *default-shell*))))
-
-(defun init-lxc (name)
-  "Initializes the LXC after creating it. It means:
-- Giving it a static IP
-- Adding the static IP to the host's /etc/hosts
-- Making a symlink to the rootfs somewhere"
-  (let ((ip (next-ip)))
-    (assign-static-ip name ip *lxc-gateway* *default-dns-nameserver*)
-    (add-ip *hosts-file* ip (concatenate 'string name "." *lxc-host-extension*))
-    (make-symlink
-     (merge-pathnames (merge-pathnames *lxc-rootfs* name) *lxc-default-folder*)
-     (merge-pathnames name *lxc-folder*))))
-
-(defun make-symlink (base end)
-  "Makes a symlink from end to base"
-  (run
-    "ln"
-    "-s" base end))
 
 (defun create (name &key base template)
   "Creates an LXC"
@@ -93,13 +65,6 @@
       "lxc-destroy"
       "--name" cli-name)
     (remove-lxc-leftovers cli-name)))
-
-(defun remove-lxc-leftovers (name)
-  "Removes the leftovers such as:
-- The IP in /etc/hosts
-- The symbolic link to the now-missing rootfs"
-  ;; @todo
-  )
 
 (defun adapt-arg (name)
   "Adapts an argument to string"
