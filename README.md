@@ -8,6 +8,25 @@ I use LXC in a very opinionated way, and has some manual maintenance
 to do every time I do something with LXCs. So I created this tool to
 automate what I do with them.
 
+## What it does
+
+- I always forget the `--name` option. lxc-wrapper assumes that the
+  argument is the name of the container.
+- Writing `--fancy` when I want an ls should be the default. No
+  argument needed.
+- When creating a container, it assigns a static IP to it, adds an
+  entry to the hosts file so that the container is reachable, and adds
+  a symbolic link to the rootfs in a defined folder.
+- Destroying a container cleans up behind itself.
+
+## Requirements
+
+Tested on SBCL only, but nothing specific is used. Should work on
+other platforms.
+
+The swank server needs to be ran as root. (Ideally with sudo, so that
+`~` matches your user folder)
+
 ## API
 
 ### Functions
