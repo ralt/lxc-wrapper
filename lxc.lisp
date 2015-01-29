@@ -7,12 +7,12 @@
 (defvar *lxc-gateway* "10.0.3.1")
 (defvar *default-dns-nameserver* "8.8.8.8")
 
-(defun init-lxc (name)
+(defun init-lxc (name file)
   "Initializes the LXC after creating it. It means:
 - Giving it a static IP
 - Adding the static IP to the host's /etc/hosts
 - Making a symlink to the rootfs somewhere"
-  (let ((ip (next-ip)))
+  (let ((ip (next-ip file)))
     (assign-static-ip name ip *lxc-gateway* *default-dns-nameserver*)
     (add-ip *hosts-file* ip (concatenate 'string name "." *lxc-host-extension*))
     (make-lxc-symlink
@@ -23,8 +23,8 @@
   "Removes the leftovers such as:
 - The IP in /etc/hosts
 - The symbolic link to the now-missing rootfs"
-  ;; @todo
-  )
+  (remove-ip *hosts-file* name)
+  (delete-file (merge-pathnames name *lxc-folder*)))
 
 (defun make-lxc-symlink (base end)
   "Makes a symlink from end to base"

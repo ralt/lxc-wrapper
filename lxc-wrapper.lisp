@@ -26,7 +26,7 @@
       "lxc-clone"
       "--orig" cli-base
       "--new" cli-name)
-    (init-lxc cli-name)))
+    (init-lxc cli-name *hosts-file*)))
 
 (defun create-base (name template)
   "Creates an LXC from no base"
@@ -36,7 +36,7 @@
       "lxc-create"
       "--name" cli-name
       "-t" cli-template)
-    (init-lxc cli-name)))
+    (init-lxc cli-name *hosts-file*)))
 
 (defun start (name)
   "Starts an LXC"

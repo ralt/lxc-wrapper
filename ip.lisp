@@ -5,14 +5,14 @@
 (defvar *ip-regex* "^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
 (defvar *lxc-interfaces-file* #p"etc/network/interfaces")
 
-(defun next-ip ()
+(defun next-ip (file)
   "Finds the next available IP for the LXC"
   (format
    nil
    "~{~D~^.~}"
    (generate-next-ip
-    (with-open-file (file *hosts-file*)
-      (loop for line = (read-line file nil)
+    (with-open-file (f file)
+      (loop for line = (read-line f nil)
 	 while line
 	 when (line-matches-ip line)
 	 collect (line-get-ip line))))))
@@ -90,3 +90,19 @@ iface eth0 inet static~%
    (merge-pathnames
     *lxc-rootfs*
     (merge-pathnames name *lxc-default-folder*))))
+
+(defun remove-ip (file name)
+  "Removes a line from the hosts file"
+  ;; @todo
+  (let ((hosts (alexandria:read-file-into-string file)))
+    (delete-file file)
+    (alexandria:write-string-into-file
+     (cl-ppcre:regex-replace (concatenate
+			      'string
+			      "\\d+\\.\\d+\\.\\d+\\.\\d+ "
+			      name
+			      "\\.lxc"
+			      "\\n")
+			     hosts
+			     "")
+     file)))
