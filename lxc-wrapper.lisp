@@ -4,7 +4,6 @@
 
 (defvar *lxc-default-folder* #p"/var/lib/lxc/")
 (defvar *lxc-folder* (merge-pathnames #p"lxc/" (user-homedir-pathname)))
-(defvar *hosts-file* #p"/etc/hosts")
 (defvar *lxc-host-extension* ".lxc")
 (defvar *default-shell* #p"/bin/bash")
 

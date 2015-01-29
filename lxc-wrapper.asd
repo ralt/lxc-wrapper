@@ -5,7 +5,7 @@
   :author "Florian Margaine <florian@margaine.com>"
   :license "MIT License"
   :serial t
-  :depends-on ("external-program")
+  :depends-on ("external-program" "cl-ppcre")
   :components ((:file "package")
 	       (:file "ip")
                (:file "lxc-wrapper")))
