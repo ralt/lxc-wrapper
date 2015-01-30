@@ -39,7 +39,7 @@ $ sudo lxc-wrapper start bar
 $ sudo lxc-wrapper ls
 NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
 ----------------------------------------------------
-bar       STOPPED  10.0.3.4  -     -       NO         
+bar       STARTED  10.0.3.4  -     -       NO         
 foo       STOPPED  -         -     -       NO         
 $ ssh ubuntu@bar.lxc
 #+END_EXAMPLE
