@@ -12,11 +12,11 @@
      ;; see man environ
      :environment (list (cons "SHELL" *default-shell*))))
 
-(defcommand create (name &key base template)
+(defcommand create (name args)
   "Creates an LXC"
-  (if base
-      (create-clone base name)
-      (create-base name template)))
+  (if (getf args :base)
+      (create-clone (getf args :base) name)
+      (create-base name (getf args :template))))
 
 (defun create-clone (base name)
   "Creates a clone of another LXC"
@@ -38,7 +38,7 @@
       "-t" cli-template)
     (init-lxc cli-name *hosts-file*)))
 
-(defcommand start (name args)
+(defcommand start (name &rest args)
   "Starts an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
@@ -46,7 +46,7 @@
       "lxc-start"
       "--name" cli-name)))
 
-(defcommand stop (name args)
+(defcommand stop (name &rest args)
   "Stops an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
@@ -61,8 +61,9 @@
    "lxc-ls"
    "--fancy"))
 
-(defcommand destroy (name)
+(defcommand destroy (name &rest args)
   "Destroys an LXC and its leftovers"
+  (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
     (run
       "lxc-destroy"

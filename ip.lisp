@@ -20,7 +20,7 @@
 (defun add-ip (file ip host)
   "Adds the ip:extension pair to the hosts file"
   (with-open-file (f file :direction :output :if-exists :append)
-    (format f "~%~A ~A~%" ip host)))
+    (format f "~A ~A~%" ip host)))
 
 (defun line-matches-ip (line)
   "Finds if the line matches an IP. Which means that
@@ -71,16 +71,16 @@ the line must starts with an IP address."
   "Assigns a static IP to an LXC"
   ;; @todo
   (let ((path (path-lxc-interfaces name)))
-    (delete-file path)
-    (with-open-file (file path :if-does-not-exist :create)
+    (lxc-delete-file path)
+    (with-open-file (file path :if-does-not-exist :create :direction :output)
       (format file "
-auto lo~%
-iface lo inet loopback~%
-~%
-auto eth0~%
-iface eth0 inet static~%
-~Taddress ~A~%
-~Tgateway ~A~%
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+~Taddress ~A
+~Tgateway ~A
 ~Tdns-nameserver ~A~%" ip gateway dns))))
 
 (defun path-lxc-interfaces (name)
@@ -89,13 +89,13 @@ iface eth0 inet static~%
    *lxc-interfaces-file*
    (merge-pathnames
     *lxc-rootfs*
-    (merge-pathnames name *lxc-default-folder*))))
+    (merge-pathnames (concatenate 'string name "/") *lxc-default-folder*))))
 
 (defun remove-ip (file name)
   "Removes a line from the hosts file"
   ;; @todo
   (let ((hosts (alexandria:read-file-into-string file)))
-    (delete-file file)
+    (lxc-delete-file file)
     (alexandria:write-string-into-file
      (cl-ppcre:regex-replace (concatenate
 			      'string

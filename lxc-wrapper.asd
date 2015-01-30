@@ -5,7 +5,7 @@
   :serial t
   :depends-on ("external-program" "cl-ppcre" "alexandria" "apply-argv")
   :components ((:file "package")
+	       (:file "lxc-wrapper")
 	       (:file "cli")
 	       (:file "ip")
-	       (:file "lxc")
-               (:file "lxc-wrapper")))
+	       (:file "lxc")))
