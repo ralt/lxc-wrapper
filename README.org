@@ -25,7 +25,7 @@ Starting a new project "bar" based on the "foo" stack.
 
 #+BEGIN_EXAMPLE
 $ sudo lxc-wrapper --base foo create bar
-Created container foo as copy of lamp
+Created container bar as copy of foo
 $ sudo lxc-wrapper ls
 NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
 ----------------------------------------------------
