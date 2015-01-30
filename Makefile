@@ -5,9 +5,12 @@ ASDF_TREE ?= ~/quicklisp/
 BIN=dist/usr/bin/lxc-wrapper
 DESTDIR=
 
-$(BIN): $(LISP_FILES)
+$(BIN): $(LISP_FILES) quickload
 	mkdir -p dist/usr/bin
 	buildapp --load-system lxc-wrapper --entry lxc-wrapper:main --output $(BIN) --asdf-tree $(ASDF_TREE) --asdf-tree . --compress-core
+
+quickload:
+	sbcl --eval "(ql:quickload 'lxc-wrapper)" --quit
 
 clean:
 	rm -rf dist/
