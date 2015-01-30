@@ -1,7 +1,7 @@
 NAME=lxc-wrapper
 VERSION=
 LISP_FILES=$(shell find . -name '*.lisp')
-ASDF_TREE=~/quicklisp/
+ASDF_TREE ?= ~/quicklisp/
 BIN=dist/usr/bin/lxc-wrapper
 DESTDIR=
 
