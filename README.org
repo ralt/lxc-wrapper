@@ -19,6 +19,14 @@ automate what I do with them.
    a symbolic link to the rootfs in a defined folder.
 -  Destroying a container cleans up behind itself.
 
+** Installation
+
+You can:
+
+- Download the sources and run =make && make install=
+- Download and install the [[https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper-1.0.0-1.x86_64.rpm][rpm file]] if you're on Fedora/CentOS/Red Hat (x86_64 only)
+- Download and install the [[https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper_1.0.0_amd64.deb][deb file]] if you're on Ubuntu/Debian (amd64 only)
+
 ** CLI Usage
 
 #+BEGIN_EXAMPLE
