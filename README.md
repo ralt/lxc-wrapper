@@ -1,6 +1,6 @@
 # lxc-wrapper
 
-My personal LXC wrapper.
+An opinionated LXC wrapper.
 
 ## Motivation
 
@@ -19,13 +19,64 @@ automate what I do with them.
   a symbolic link to the rootfs in a defined folder.
 - Destroying a container cleans up behind itself.
 
+## CLI Usage
+
+```
+$ lxc-wrapper # or lxc-wrapper help
+Usage: lxc-wrapper [OPTIONS] [COMMAND]
+Wrapper around lxc for an opinionated workflow.
+
+Commands:
+
+ create NAME
+  creates a container named NAME
+
+  Options (must be BEFORE the command):
+   --base=BASE
+    clone BASE
+   --template=TEMPLATE
+    use the TEMPLATE lxc template
+
+ start NAME
+  starts the container named NAME
+
+ stop NAME
+  stops the container named NAME
+
+ ls
+  lists the containers
+
+ destroy NAME
+  destroys the container named NAME
+```
+
 ## Requirements
+
+Linux only.
 
 Tested on SBCL only, but nothing specific is used. Should work on
 other platforms.
 
-The swank server needs to be ran as root. (Ideally with sudo, so that
-`~` matches your user folder)
+The swank server or the CLI utility needs to be ran as root. (Ideally
+with sudo, so that `~` matches your user folder)
+
+## Development
+
+You need:
+
+- SBCL
+- QuickLisp
+
+To create a CLI utility, you need:
+
+- buildapp
+
+The Makefile supports the following tasks:
+
+- all: builds the `./dist/lxc-wrapper` binary
+- clean: deletes the `./dist/` folder
+- install: copies the `./dist/lxc-wrapper` binary to `DESTDIR` which
+  is `/usr/bin` by default
 
 ## API
 
