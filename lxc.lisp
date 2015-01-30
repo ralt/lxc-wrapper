@@ -1,12 +1,5 @@
 (in-package #:lxc-wrapper)
 
-(defvar *lxc-default-folder* #p"/var/lib/lxc/")
-(defvar *lxc-rootfs* #p"rootfs/")
-(defvar *lxc-folder* (merge-pathnames #p"lxc/" (user-homedir-pathname)))
-(defvar *lxc-host-extension* ".lxc")
-(defvar *lxc-gateway* "10.0.3.1")
-(defvar *default-dns-nameserver* "8.8.8.8")
-
 (defun init-lxc (name file)
   "Initializes the LXC after creating it. It means:
 - Giving it a static IP

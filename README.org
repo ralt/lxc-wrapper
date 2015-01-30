@@ -94,11 +94,12 @@ Commands:
  create NAME
   creates a container named NAME
 
-   Options (must be BEFORE the command):
+  Options (must be BEFORE the command):
    --base=BASE
     clone BASE
    --template=TEMPLATE
     use the TEMPLATE lxc template
+   --lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extension, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
 
  start NAME
   starts the container named NAME
@@ -111,6 +112,12 @@ Commands:
 
  destroy NAME
   destroys the container named NAME
+
+  Options (must be BEFORE the command):
+   --lxc-folder, --lxc-host-extension, --hosts-file
+
+ Options for all commands (must be BEFORE the command):
+  --default-shell
 #+END_EXAMPLE
 
 ** Requirements

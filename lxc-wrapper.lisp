@@ -1,7 +1,5 @@
 (in-package #:lxc-wrapper)
 
-(defvar *default-shell* #p"/bin/bash")
-
 (defmacro run (&body command)
   "Runs a command. To avoid having an awkward API
  (i.e. passing a list), defining this as a macro."

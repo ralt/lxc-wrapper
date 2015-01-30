@@ -1,10 +1,5 @@
 (in-package #:lxc-wrapper)
 
-(defvar *hosts-file* #p"/etc/hosts")
-(defvar *lxc-network* '(10 0 3 0))
-(defvar *ip-regex* "^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
-(defvar *lxc-interfaces-file* #p"etc/network/interfaces")
-
 (defun next-ip (file)
   "Finds the next available IP for the LXC"
   (format
