@@ -129,6 +129,7 @@ Known limitations:
 - Only /24 subnetworks supported. Which means you can only make 254
   containers *with lxc-wrapper* on one host.
 - Autostart management not supported yet.
+- The CLI doesn't support overriding the default variables yet.
 
 ** Development
 
