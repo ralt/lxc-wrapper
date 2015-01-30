@@ -1,5 +1,12 @@
 (in-package #:lxc-wrapper)
 
+;; Default behavior is to get in the debugger,
+;; change that.
+(setf *debugger-hook*
+      (lambda (c h)
+	(declare (ignore c h))
+	(uiop:quit -1)))
+
 (defvar *commands* (make-hash-table :test #'equal))
 
 (defmacro defcommand (name args &body body)
@@ -10,13 +17,14 @@
 
 (defun main (args)
   "CLI entry point"
-  ;; @todo
-  (let* ((parsed-args (apply-argv:parse-argv (cdr args)))
-	 (command (caar parsed-args))
-	 (name (cadar parsed-args)))
-    (if command
-	(funcall (gethash (string-upcase command) *commands*) name parsed-args)
-	(help))))
+  (handler-case
+      (let* ((parsed-args (apply-argv:parse-argv (cdr args)))
+	     (command (caar parsed-args))
+	     (name (cadar parsed-args)))
+	(if command
+	    (funcall (gethash (string-upcase command) *commands*) name (cdr parsed-args))
+	    (help)))
+    (error () (format *error-output* "An internal error occured. Are you sure the options are before the command?~%"))))
 
 (defcommand help (&rest args)
   "Help output"
@@ -30,7 +38,8 @@ Commands:
 
 ~Tcreate NAME
 ~T~Tcreates a container named NAME
-~T~TArguments:
+
+~T~TOptions (must be BEFORE the command):
 ~T~T~T--base=BASE
 ~T~T~T~Tclone BASE
 ~T~T~T--template=TEMPLATE
