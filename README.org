@@ -19,6 +19,38 @@ automate what I do with them.
    a symbolic link to the rootfs in a defined folder.
 -  Destroying a container cleans up behind itself.
 
+** Example session
+
+Starting a new project "bar" based on the "foo" stack.
+
+#+BEGIN_EXAMPLE
+$ sudo lxc-wrapper --base foo create bar
+Created container foo as copy of lamp
+$ sudo lxc-wrapper ls
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+----------------------------------------------------
+bar       STOPPED  -         -     -       NO         
+foo       STOPPED  -         -     -       NO         
+$ sudo lxc-wrapper start bar
+$ sudo lxc-wrapper ls
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+----------------------------------------------------
+bar       STOPPED  10.0.3.4  -     -       NO         
+foo       STOPPED  -         -     -       NO         
+$ ssh ubuntu@bar.lxc
+#+END_EXAMPLE
+
+When done with the project:
+
+#+BEGIN_EXAMPLE
+$ sudo lxc-wrapper stop bar
+$ sudo lxc-wrapper destroy bar
+$ sudo lxc-wrapper ls
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+----------------------------------------------------
+foo       STOPPED  -         -     -       NO         
+#+END_EXAMPLE
+
 ** Installation
 
 You can:
