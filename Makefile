@@ -7,7 +7,7 @@ DESTDIR=
 
 $(BIN): $(LISP_FILES)
 	mkdir -p dist/usr/bin
-	buildapp --load-system lxc-wrapper --entry lxc-wrapper:main --output $(BIN) --asdf-tree $(ASDF_TREE) --compress-core
+	buildapp --load-system lxc-wrapper --entry lxc-wrapper:main --output $(BIN) --asdf-tree $(ASDF_TREE) --asdf-tree . --compress-core
 
 clean:
 	rm -rf dist/
