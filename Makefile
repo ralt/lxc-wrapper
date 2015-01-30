@@ -15,6 +15,8 @@ clean:
 install: $(BIN)
 	cp $(BIN) $(DESTDIR)/usr/bin
 
+release: deb rpm
+
 deb: $(BIN)
 	fpm -p dist/ -s dir -t deb -n $(NAME) -v $(VERSION) -C dist/ usr/bin
 

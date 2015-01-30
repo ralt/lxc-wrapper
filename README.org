@@ -55,6 +55,24 @@ NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 foo       STOPPED  -         -     -       NO         
 #+END_EXAMPLE
 
+** Why not docker?!
+
+Good question.
+
+Several reasons:
+
+- Docker is based on an overlayfs system all the time. My usage is
+  simply having long-term projects, so docker's containers don't make
+  sense.
+- Docker's networking doesn't allow me to assign a static IP to a
+  container. It makes it inconvenient, especially for long-term
+  containers, to connect to them via ssh.
+- Docker's containers' filesystems are hidden when they're not
+  started. I don't want to start a container just to get some random
+  file in it.
+- Docker CLI are not a very beautiful API. lxc-wrapper is supposed to
+  be *simple* to use.
+
 ** Installation
 
 You can:
@@ -104,6 +122,14 @@ platforms.
 The swank server or the CLI utility needs to be ran as root. (Ideally
 with sudo, so that =~= matches your user folder)
 
+** Limitations
+
+Known limitations:
+
+- Only /24 subnetworks supported. Which means you can only make 254
+  containers *with lxc-wrapper* on one host.
+- Autostart management not supported yet.
+
 ** Development
 
 You need:
@@ -129,7 +155,7 @@ The Makefile supports the following tasks:
 **** =create=
 
 #+BEGIN_SRC lisp
-(defun create (name &key base template)
+(defcommand create (name args)
   "Creates an LXC"
 #+END_SRC
 
@@ -149,7 +175,7 @@ The opinionated part of lxc-wrapper comes here. For every new LXC:
 **** =destroy=
 
 #+BEGIN_SRC lisp
-(defun destroy (name)
+(defcommand destroy (name)
   "Destroys an LXC and its leftovers"
 #+END_SRC
 
@@ -164,7 +190,7 @@ destroyed:
 **** =start=
 
 #+BEGIN_SRC lisp
-(defun start (name)
+(defcommand start (name)
   "Starts an LXC"
 #+END_SRC
 
@@ -173,7 +199,7 @@ Starts an LXC. The argument can be a string or a symbol.
 **** =stop=
 
 #+BEGIN_SRC lisp
-(defun stop (name)
+(defcommand stop (name)
   "Stops an LXC"
 #+END_SRC
 
@@ -182,7 +208,7 @@ Stops an LXC. The argument can be a string or a symbol.
 **** =ls=
 
 #+BEGIN_SRC lisp
-(defun ls ()
+(defcommand ls ()
   "Lists all the LXC"
 #+END_SRC
 
