@@ -27,20 +27,20 @@ Starting a new project "bar" based on the "foo" stack.
 $ sudo lxc-wrapper --base foo create bar
 Created container bar as copy of foo
 $ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 ----------------------------------------------------
-bar       STOPPED  -         -     -       NO         
-foo       STOPPED  -         -     -       NO         
+bar       STOPPED  -         -     -       NO
+foo       STOPPED  -         -     -       NO
 $ ls ~/lxc/
 foo bar
 $ ls ~/lxc/bar
 bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 $ sudo lxc-wrapper start bar
 $ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 ----------------------------------------------------
-bar       STARTED  10.0.3.4  -     -       NO         
-foo       STOPPED  -         -     -       NO         
+bar       STARTED  10.0.3.4  -     -       NO
+foo       STOPPED  -         -     -       NO
 $ ssh ubuntu@bar.lxc
 #+END_EXAMPLE
 
@@ -50,9 +50,9 @@ When done with the project:
 $ sudo lxc-wrapper stop bar
 $ sudo lxc-wrapper destroy bar
 $ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
+NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 ----------------------------------------------------
-foo       STOPPED  -         -     -       NO         
+foo       STOPPED  -         -     -       NO
 #+END_EXAMPLE
 
 ** Why not docker?!
