@@ -31,6 +31,10 @@ NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 ----------------------------------------------------
 bar       STOPPED  -         -     -       NO         
 foo       STOPPED  -         -     -       NO         
+$ ls ~/lxc/
+foo bar
+$ ls ~/lxc/bar
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 $ sudo lxc-wrapper start bar
 $ sudo lxc-wrapper ls
 NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART  
