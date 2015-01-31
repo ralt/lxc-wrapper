@@ -25,10 +25,14 @@ test: $(TEST_SOURCES)
 release: deb rpm
 
 deb: $(APP_OUT)
-	@fpm -p dist/ -s dir -t deb -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
+	@fpm -p dist/ \
+		-d "lxc (>= 1.0)" \
+		-s dir -t deb -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
 
 rpm: $(APP_OUT)
-	@fpm -p dist/ -s dir -t rpm -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
+	@fpm -p dist/ \
+		-d "lxc" \
+		-s dir -t rpm -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
 
 install: $(APP_OUT)
 	install $(APP_OUT) $(DESTDIR)/usr/bin
