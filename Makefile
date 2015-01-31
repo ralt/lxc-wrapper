@@ -18,7 +18,8 @@ TEST_SOURCES=$(shell find test/ -name '*.lisp')
 all: $(APP_OUT)
 
 test: $(TEST_SOURCES)
-	@sbcl --load run-tests.lisp \
+	@sbcl --eval '(ql:quickload :lxc-wrapper)' \
+		--eval '(asdf:test-system :lxc-wrapper)' \
 		--quit
 
 release: deb rpm
