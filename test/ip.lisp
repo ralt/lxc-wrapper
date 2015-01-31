@@ -21,5 +21,5 @@
   (5am:is-true (equal '(10 0 3 3) (lxc-wrapper::new-ip '(10 0 3 2) 3 3))))
 
 (5am:test test-path-lxc-interfaces
-  (5am:is-true (equal #p"/var/lib/lxc/foo/rootfs/etc/network/interfaces"
+  (5am:is-false (equal #p"/var/lib/lxc/foo/rootfs/etc/network/interfaces"
 		      (lxc-wrapper::path-lxc-interfaces "foo"))))
