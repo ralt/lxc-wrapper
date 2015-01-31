@@ -25,10 +25,15 @@ before_script:
 # to do unit testing; other frameworks will have different ways of
 # determining whether a test suite fails or succeeds.
 script:
-  - cl -e '(ql:quickload :lxc-wrapper)
-           (asdf:test-system :lxc-wrapper)
-           (uiop:quit 0)';
-    [ $? -eq 1 ]
+  - cl -e '(ql:quickload :lxc-wrapper)'
+       -e '(ql:quickload :fiveam)'
+       -e '(setf fiveam:*debug-on-error* t
+                 fiveam:*debug-on-failure* t)'
+       -e '(setf *debugger-hook*
+                 (lambda (c h)
+                   (declare (ignore c h))
+                   (uiop:quit -1)))'
+       -e '(asdf:test-system :lxc-wrapper)'
 
   # testing (albeit not extensively) that, even when invoked directly,
   # Lisps still have Quicklisp available.
