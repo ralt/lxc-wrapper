@@ -14,23 +14,23 @@
   - [Development](#development)
   - [API](#api)
     - [Functions](#functions)
-      - [=create=](#create)
-      - [=destroy=](#destroy)
-      - [=start=](#start)
-      - [=stop=](#stop)
-      - [=ls=](#ls)
+      - [`create`](#create)
+      - [`destroy`](#destroy)
+      - [`start`](#start)
+      - [`stop`](#stop)
+      - [`ls`](#ls)
     - [Variables](#variables)
-      - [=\*lxc-default-folder\*=](#\lxc-default-folder\)
-      - [=\*lxc-rootfs\*=](#\lxc-rootfs\)
-      - [=\*lxc-folder\*=](#\lxc-folder\)
-      - [=\*lxc-host-extension\*=](#\lxc-host-extension\)
-      - [=\*lxc-gateway\*=](#\lxc-gateway\)
-      - [=\*default-dns-nameserver\*=](#\default-dns-nameserver\)
-      - [=\*hosts-file\*=](#\hosts-file\)
-      - [=\*lxc-network\*=](#\lxc-network\)
-      - [=\*ip-regex\*=](#\ip-regex\)
-      - [=\*lxc-interfaces-file\*=](#\lxc-interfaces-file\)
-      - [=\*default-shell\*=](#\default-shell\)
+      - [`*lxc-default-folder*`](#lxc-default-folder)
+      - [`*lxc-rootfs*`](#lxc-rootfs)
+      - [`*lxc-folder`*`](#lxc-folder)
+      - [`*lxc-host-extension*`](#lxc-host-extension)
+      - [`*lxc-gateway*`](#lxc-gateway)
+      - [`*default-dns-nameserver*`](#default-dns-nameserver)
+      - [`*hosts-file*`](#hosts-file)
+      - [`*lxc-network*`](#lxc-network)
+      - [`*ip-regex*`](#ip-regex)
+      - [`*lxc-interfaces-file*`](#lxc-interfaces-file)
+      - [`*default-shell*`](#default-shell)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -193,18 +193,18 @@ To create a CLI utility, you need:
 
 The Makefile supports the following tasks:
 
--   all: builds the `./dist/usr/bin/lxc-wrapper` binary, along with
+-   `all`: builds the `./dist/usr/bin/lxc-wrapper` binary, along with
     downloading dependencies in a local quicklisp environment
--   clean: deletes the dependencies and the binary
--   install: copies the `./dist/usr/binlxc-wrapper` binary to `DESTDIR`
+-   `clean`: deletes the dependencies and the binary
+-   `install`: copies the `./dist/usr/binlxc-wrapper` binary to `DESTDIR`
     which is `/usr/bin` by default
--   test: runs tests; requires a functional lisp environment
+-   `test`: runs tests; requires a functional lisp environment
 
 ## API
 
 ### Functions
 
-#### =create=
+#### `create`
 
 ```lisp
 (defcommand create (name args)
@@ -224,7 +224,7 @@ The opinionated part of lxc-wrapper comes here. For every new LXC:
 -   It adds the static IP to the host's /etc/hosts
 -   It makes a symlink to the rootfs
 
-#### =destroy=
+#### `destroy`
 
 ```lisp
 (defcommand destroy (name)
@@ -239,7 +239,7 @@ destroyed:
 -   It destroys the entry in the host's /etc/hosts
 -   It deletes the symlink to the rootfs
 
-#### =start=
+#### `start`
 
 ```lisp
 (defcommand start (name)
@@ -248,7 +248,7 @@ destroyed:
 
 Starts an LXC. The argument can be a string or a symbol.
 
-#### =stop=
+#### `stop`
 
 ```lisp
 (defcommand stop (name)
@@ -257,7 +257,7 @@ Starts an LXC. The argument can be a string or a symbol.
 
 Stops an LXC. The argument can be a string or a symbol.
 
-#### =ls=
+#### `ls`
 
 ```lisp
 (defcommand ls ()
@@ -271,7 +271,7 @@ Returns the fancy output of the list of LXCs.
 Variables are used throughout the code to be able to customize them
 through dynamic scoping.
 
-#### =\*lxc-default-folder\*=
+#### `*lxc-default-folder*`
 
 Used by: `create`
 
@@ -279,7 +279,7 @@ Default value: `/var/lib/lxc/`
 
 The folder where LXC stores its containers.
 
-#### =\*lxc-rootfs\*=
+#### `*lxc-rootfs*`
 
 Used by: `create`
 
@@ -287,7 +287,7 @@ Default value: `rootfs`
 
 The folder where the filesystem of the container lives.
 
-#### =\*lxc-folder\*=
+#### `*lxc-folder`*`
 
 Used by: `create`, `destroy`
 
@@ -295,7 +295,7 @@ Default value: `~/lxc`
 
 The folder where symbolic links to the containers' filesystems are made.
 
-#### =\*lxc-host-extension\*=
+#### `*lxc-host-extension*`
 
 Used by: `create`, `destroy`
 
@@ -303,7 +303,7 @@ Default value: `.lxc`
 
 The TLD of the container hostname.
 
-#### =\*lxc-gateway\*=
+#### `*lxc-gateway*`
 
 Used by: `create`
 
@@ -311,7 +311,7 @@ Default value: `10.0.3.1`
 
 The gateway that the container uses.
 
-#### =\*default-dns-nameserver\*=
+#### `*default-dns-nameserver*`
 
 Used by: `create`
 
@@ -319,7 +319,7 @@ Default value: `8.8.8.8`
 
 The DNS nameserver that the container uses.
 
-#### =\*hosts-file\*=
+#### `*hosts-file*`
 
 Used by: `create`, `destroy`
 
@@ -327,15 +327,15 @@ Default value: `/etc/hosts`
 
 The host's hosts file.
 
-#### =\*lxc-network\*=
+#### `*lxc-network*`
 
 Used by: `create`, `destroy`
 
-Default value: ='(10 0 3 0)=
+Default value: `'(10 0 3 0)`
 
 The network of the container. Only /24 supported.
 
-#### =\*ip-regex\*=
+#### `*ip-regex*`
 
 Used by: `create`
 
@@ -343,7 +343,7 @@ Default value: `^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)`
 
 The regex used to find IPs in the hosts file.
 
-#### =\*lxc-interfaces-file\*=
+#### `*lxc-interfaces-file*`
 
 Used by: `create`
 
@@ -351,7 +351,7 @@ Default value: `etc/network/interfaces`
 
 The file where interfaces are written in the container.
 
-#### =\*default-shell\*=
+#### `*default-shell*`
 
 Used by: `create`, `destroy`, `start`, `stop`, `ls`
 
