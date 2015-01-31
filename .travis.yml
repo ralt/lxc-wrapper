@@ -26,6 +26,7 @@ before_script:
 # determining whether a test suite fails or succeeds.
 script:
   - cl -e '(ql:quickload :lxc-wrapper)
+           (ql:quickload :fiveam)
            (asdf:test-system :lxc-wrapper)';
     [ $? -eq 1 ]
 
