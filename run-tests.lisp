@@ -18,7 +18,6 @@
 (5am:run! 'cli)
 (5am:run! 'lxc-wrapper)
 (5am:run! 'ip)
-(5am:run! 'lxc)
 
 ;; Everything went fine
 (uiop:quit 0)

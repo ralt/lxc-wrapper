@@ -14,7 +14,7 @@
 			     (list "LS" #'lxc-wrapper::ls)
 			     (list "DESTROY" #'lxc-wrapper::destroy))
      do (progn
-	  (5am:is-true (eq (type-of (car (cdr command))) 'function))
+	  (5am:is-true (eq (type-of (cadr command)) 'function))
 	  (multiple-value-bind (fn present)
 	      (gethash (car command) lxc-wrapper::*commands*)
 	    (declare (ignore fn))

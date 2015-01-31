@@ -6,4 +6,3 @@
 (5am:def-suite cli)
 (5am:def-suite lxc-wrapper)
 (5am:def-suite ip)
-(5am:def-suite lxc)

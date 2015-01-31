@@ -10,5 +10,4 @@
 			((:file "test-suites")
 			 (:file "cli")
 			 (:file "lxc-wrapper")
-			 (:file "ip")
-			 (:file "lxc")))))
+			 (:file "ip")))))
