@@ -1,31 +1,31 @@
-* lxc-wrapper
+# lxc-wrapper
 
-[[https://travis-ci.org/Ralt/lxc-wrapper.svg][Travis build status]]
+[![Build Status](https://travis-ci.org/Ralt/lxc-wrapper.svg?branch=master)](https://travis-ci.org/Ralt/lxc-wrapper)
 
 An opinionated LXC wrapper.
 
-** Motivation
+## Motivation
 
 I use LXC in a very opinionated way, and has some manual maintenance to
 do every time I do something with LXCs. So I created this tool to
 automate what I do with them.
 
-** What it does
+## What it does
 
--  I always forget the =--name= option. lxc-wrapper assumes that the
-   argument is the name of the container.
--  Writing =--fancy= when I want an ls should be the default. No
-   argument needed.
--  When creating a container, it assigns a static IP to it, adds an
-   entry to the hosts file so that the container is reachable, and adds
-   a symbolic link to the rootfs in a defined folder.
--  Destroying a container cleans up behind itself.
+-   I always forget the `--name` option. lxc-wrapper assumes that the
+    argument is the name of the container.
+-   Writing `--fancy` when I want an ls should be the default. No
+    argument needed.
+-   When creating a container, it assigns a static IP to it, adds an
+    entry to the hosts file so that the container is reachable, and adds
+    a symbolic link to the rootfs in a defined folder.
+-   Destroying a container cleans up behind itself.
 
-** Example session
+## Example session
 
 Starting a new project "bar" based on the "foo" stack.
 
-#+BEGIN_EXAMPLE
+```
 $ sudo lxc-wrapper --base foo create bar
 Created container bar as copy of foo
 $ sudo lxc-wrapper ls
@@ -44,49 +44,56 @@ NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 bar       STARTED  10.0.3.4  -     -       NO
 foo       STOPPED  -         -     -       NO
 $ ssh ubuntu@bar.lxc
-#+END_EXAMPLE
+```
 
 When done with the project:
 
-#+BEGIN_EXAMPLE
+```
 $ sudo lxc-wrapper stop bar
 $ sudo lxc-wrapper destroy bar
 $ sudo lxc-wrapper ls
 NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
 ----------------------------------------------------
 foo       STOPPED  -         -     -       NO
-#+END_EXAMPLE
+```
 
-** Why not docker?!
+## Why not docker?!
 
 Good question.
 
 Several reasons:
 
-- Docker is based on an overlayfs system all the time. My usage is
-  simply having long-term projects, so docker's containers don't make
-  sense.
-- Docker's networking doesn't allow me to assign a static IP to a
-  container. It makes it inconvenient, especially for long-term
-  containers, to connect to them via ssh.
-- Docker's containers' filesystems are hidden when they're not
-  started. I don't want to start a container just to get some random
-  file in it.
-- Docker CLI are not a very beautiful API. lxc-wrapper is supposed to
-  be *simple* to use.
+-   Docker is based on an overlayfs system all the time. My usage is
+    simply having long-term projects, so docker's containers don't make
+    sense.
+-   Docker's networking doesn't allow me to assign a static IP to a
+    container. It makes it inconvenient, especially for long-term
+    containers, to connect to them via ssh.
+-   Docker's containers' filesystems are hidden when they're not
+    started. I don't want to start a container just to get some random
+    file in it.
+-   Docker CLI are not a very beautiful API. lxc-wrapper is supposed to
+    be **simple** to use.
 
-** Installation
+## Installation
 
 You can:
 
-- Download the sources and run =make && make install=. Only =sbcl= is needed.
-- Download and install the [[https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper-1.0.0-1.x86_64.rpm][rpm file]] if you're on Fedora/CentOS/Red Hat (x86_64 only)
-- Download and install the [[https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper_1.0.0_amd64.deb][deb file]] if you're on Ubuntu/Debian (amd64 only)
-- Download and install the [[https://aur.archlinux.org/packages/lxc-wrapper/][PKGBUILD]] if you're on ArchLinux
+-   Download the sources and run `make && make install`. Only `sbcl` is
+    needed.
+-   Download and install the [rpm
+    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper-1.0.0-1.x86_64.rpm)
+    if you're on Fedora/CentOS/Red Hat (x86~64~ only)
+-   Download and install the [deb
+    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper_1.0.0_amd64.deb)
+    if you're on Ubuntu/Debian (amd64 only)
+-   Download and install the
+    [PKGBUILD](https://aur.archlinux.org/packages/lxc-wrapper/) if
+    you're on ArchLinux
 
-** CLI Usage
+## CLI Usage
 
-#+BEGIN_EXAMPLE
+```
 $ lxc-wrapper # or lxc-wrapper help
 Usage: lxc-wrapper [OPTIONS] [COMMAND]
 Wrapper around lxc for an opinionated workflow.
@@ -120,9 +127,9 @@ Commands:
 
  Options for all commands (must be BEFORE the command):
   --default-shell
-#+END_EXAMPLE
+```
 
-** Requirements
+## Requirements
 
 Linux only.
 
@@ -130,46 +137,46 @@ Tested on SBCL only, but nothing specific is used. Should work on other
 platforms.
 
 The swank server or the CLI utility needs to be ran as root. (Ideally
-with sudo, so that =~= matches your user folder)
+with sudo, so that `~` matches your user folder)
 
-** Limitations
+## Limitations
 
 Known limitations:
 
-- Only /24 subnetworks supported. Which means you can only make 254
-  containers *with lxc-wrapper* on one host.
-- Autostart management not supported yet.
+-   Only /24 subnetworks supported. Which means you can only make 254
+    containers **with lxc-wrapper** on one host.
+-   Autostart management not supported yet.
 
-** Development
+## Development
 
 You need:
 
--  SBCL
--  QuickLisp
+-   SBCL
+-   QuickLisp
 
 To create a CLI utility, you need:
 
--  buildapp
+-   buildapp
 
 The Makefile supports the following tasks:
 
--  all: builds the =./dist/usr/bin/lxc-wrapper= binary, along with
-   downloading dependencies in a local quicklisp environment
--  clean: deletes the dependencies and the binary
--  install: copies the =./dist/usr/binlxc-wrapper= binary to =DESTDIR=
-   which is =/usr/bin= by default
--  test: runs tests; requires a functional lisp environment
+-   all: builds the `./dist/usr/bin/lxc-wrapper` binary, along with
+    downloading dependencies in a local quicklisp environment
+-   clean: deletes the dependencies and the binary
+-   install: copies the `./dist/usr/binlxc-wrapper` binary to `DESTDIR`
+    which is `/usr/bin` by default
+-   test: runs tests; requires a functional lisp environment
 
-** API
+## API
 
-*** Functions
+### Functions
 
-**** =create=
+#### =create=
 
-#+BEGIN_SRC lisp
+```lisp
 (defcommand create (name args)
   "Creates an LXC"
-#+END_SRC
+```
 
 Creates an LXC.
 
@@ -180,145 +187,145 @@ template.
 
 The opinionated part of lxc-wrapper comes here. For every new LXC:
 
--  It gives it a static IP
--  It adds the static IP to the host's /etc/hosts
--  It makes a symlink to the rootfs
+-   It gives it a static IP
+-   It adds the static IP to the host's /etc/hosts
+-   It makes a symlink to the rootfs
 
-**** =destroy=
+#### =destroy=
 
-#+BEGIN_SRC lisp
+```lisp
 (defcommand destroy (name)
   "Destroys an LXC and its leftovers"
-#+END_SRC
+```
 
 Destroys an LXC.
 
 The opinionated part of lxc-wrapper comes here too. When an LXC is
 destroyed:
 
--  It destroys the entry in the host's /etc/hosts
--  It deletes the symlink to the rootfs
+-   It destroys the entry in the host's /etc/hosts
+-   It deletes the symlink to the rootfs
 
-**** =start=
+#### =start=
 
-#+BEGIN_SRC lisp
+```lisp
 (defcommand start (name)
   "Starts an LXC"
-#+END_SRC
+```
 
 Starts an LXC. The argument can be a string or a symbol.
 
-**** =stop=
+#### =stop=
 
-#+BEGIN_SRC lisp
+```lisp
 (defcommand stop (name)
   "Stops an LXC"
-#+END_SRC
+```
 
 Stops an LXC. The argument can be a string or a symbol.
 
-**** =ls=
+#### =ls=
 
-#+BEGIN_SRC lisp
+```lisp
 (defcommand ls ()
   "Lists all the LXC"
-#+END_SRC
+```
 
 Returns the fancy output of the list of LXCs.
 
-*** Variables
+### Variables
 
 Variables are used throughout the code to be able to customize them
 through dynamic scoping.
 
-**** =*lxc-default-folder*=
+#### =\*lxc-default-folder\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =/var/lib/lxc/=
+Default value: `/var/lib/lxc/`
 
 The folder where LXC stores its containers.
 
-**** =*lxc-rootfs*=
+#### =\*lxc-rootfs\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =rootfs=
+Default value: `rootfs`
 
 The folder where the filesystem of the container lives.
 
-**** =*lxc-folder*=
+#### =\*lxc-folder\*=
 
-Used by: =create=, =destroy=
+Used by: `create`, `destroy`
 
-Default value: =~/lxc=
+Default value: `~/lxc`
 
 The folder where symbolic links to the containers' filesystems are made.
 
-**** =*lxc-host-extension*=
+#### =\*lxc-host-extension\*=
 
-Used by: =create=, =destroy=
+Used by: `create`, `destroy`
 
-Default value: =.lxc=
+Default value: `.lxc`
 
 The TLD of the container hostname.
 
-**** =*lxc-gateway*=
+#### =\*lxc-gateway\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =10.0.3.1=
+Default value: `10.0.3.1`
 
 The gateway that the container uses.
 
-**** =*default-dns-nameserver*=
+#### =\*default-dns-nameserver\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =8.8.8.8=
+Default value: `8.8.8.8`
 
 The DNS nameserver that the container uses.
 
-**** =*hosts-file*=
+#### =\*hosts-file\*=
 
-Used by: =create=, =destroy=
+Used by: `create`, `destroy`
 
-Default value: =/etc/hosts=
+Default value: `/etc/hosts`
 
 The host's hosts file.
 
-**** =*lxc-network*=
+#### =\*lxc-network\*=
 
-Used by: =create=, =destroy=
+Used by: `create`, `destroy`
 
 Default value: ='(10 0 3 0)=
 
 The network of the container. Only /24 supported.
 
-**** =*ip-regex*=
+#### =\*ip-regex\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)=
+Default value: `^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)`
 
 The regex used to find IPs in the hosts file.
 
-**** =*lxc-interfaces-file*=
+#### =\*lxc-interfaces-file\*=
 
-Used by: =create=
+Used by: `create`
 
-Default value: =etc/network/interfaces=
+Default value: `etc/network/interfaces`
 
 The file where interfaces are written in the container.
 
-**** =*default-shell*=
+#### =\*default-shell\*=
 
-Used by: =create=, =destroy=, =start=, =stop=, =ls=
+Used by: `create`, `destroy`, `start`, `stop`, `ls`
 
-Default value: =/bin/bash=
+Default value: `/bin/bash`
 
 The shell used by the commands.
 
-** License
+## License
 
 MIT License.
