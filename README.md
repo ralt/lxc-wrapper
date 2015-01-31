@@ -1,45 +1,44 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [lxc-wrapper](#lxc-wrapper)
-  - [Motivation](#motivation)
-  - [What it does](#what-it-does)
-  - [Example session](#example-session)
-  - [Why not docker?!](#why-not-docker)
-  - [Installation](#installation)
-  - [CLI Usage](#cli-usage)
-  - [Requirements](#requirements)
-  - [Limitations](#limitations)
-  - [Development](#development)
-  - [API](#api)
-    - [Functions](#functions)
-      - [`create`](#create)
-      - [`destroy`](#destroy)
-      - [`start`](#start)
-      - [`stop`](#stop)
-      - [`ls`](#ls)
-    - [Variables](#variables)
-      - [`*lxc-default-folder*`](#lxc-default-folder)
-      - [`*lxc-rootfs*`](#lxc-rootfs)
-      - [`*lxc-folder`*`](#lxc-folder)
-      - [`*lxc-host-extension*`](#lxc-host-extension)
-      - [`*lxc-gateway*`](#lxc-gateway)
-      - [`*default-dns-nameserver*`](#default-dns-nameserver)
-      - [`*hosts-file*`](#hosts-file)
-      - [`*lxc-network*`](#lxc-network)
-      - [`*ip-regex*`](#ip-regex)
-      - [`*lxc-interfaces-file*`](#lxc-interfaces-file)
-      - [`*default-shell*`](#default-shell)
-  - [License](#license)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # lxc-wrapper
 
 [![Build Status](https://travis-ci.org/Ralt/lxc-wrapper.svg?branch=master)](https://travis-ci.org/Ralt/lxc-wrapper)
 
 An opinionated LXC wrapper.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Motivation](#motivation)
+- [What it does](#what-it-does)
+- [Example session](#example-session)
+- [Why not docker?!](#why-not-docker)
+- [Installation](#installation)
+- [CLI Usage](#cli-usage)
+- [Requirements](#requirements)
+- [Limitations](#limitations)
+- [Development](#development)
+- [API](#api)
+  - [Functions](#functions)
+    - [`create`](#create)
+    - [`destroy`](#destroy)
+    - [`start`](#start)
+    - [`stop`](#stop)
+    - [`ls`](#ls)
+  - [Variables](#variables)
+    - [`*lxc-default-folder*`](#lxc-default-folder)
+    - [`*lxc-rootfs*`](#lxc-rootfs)
+    - [`*lxc-folder`*`](#lxc-folder)
+    - [`*lxc-host-extension*`](#lxc-host-extension)
+    - [`*lxc-gateway*`](#lxc-gateway)
+    - [`*default-dns-nameserver*`](#default-dns-nameserver)
+    - [`*hosts-file*`](#hosts-file)
+    - [`*lxc-network*`](#lxc-network)
+    - [`*ip-regex*`](#ip-regex)
+    - [`*lxc-interfaces-file*`](#lxc-interfaces-file)
+    - [`*default-shell*`](#default-shell)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Motivation
 
