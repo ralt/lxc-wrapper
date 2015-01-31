@@ -137,7 +137,6 @@ Known limitations:
 - Only /24 subnetworks supported. Which means you can only make 254
   containers *with lxc-wrapper* on one host.
 - Autostart management not supported yet.
-- The CLI doesn't support overriding the default variables yet.
 
 ** Development
 
@@ -152,10 +151,12 @@ To create a CLI utility, you need:
 
 The Makefile supports the following tasks:
 
--  all: builds the =./dist/lxc-wrapper= binary
--  clean: deletes the =./dist/= folder
--  install: copies the =./dist/lxc-wrapper= binary to =DESTDIR= which is
-   =/usr/bin= by default
+-  all: builds the =./dist/usr/bin/lxc-wrapper= binary, along with
+   downloading dependencies in a local quicklisp environment
+-  clean: deletes the dependencies and the binary
+-  install: copies the =./dist/usr/binlxc-wrapper= binary to =DESTDIR=
+   which is =/usr/bin= by default
+-  test: runs tests; requires a functional lisp environment
 
 ** API
 

@@ -1,8 +1,8 @@
 (in-package #:cl-user)
 
 
-(ql:quickload #:lxc-wrapper)
-(ql:quickload #:lxc-wrapper-test)
+(ql:quickload 'lxc-wrapper)
+(ql:quickload 'lxc-wrapper-test)
 
 ;; If the debugger is fired, it means something went wrong.
 (setf fiveam:*debug-on-error* t

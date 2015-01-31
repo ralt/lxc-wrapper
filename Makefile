@@ -11,10 +11,15 @@ QL_OPTS=--load $(QL_LOCAL)/setup.lisp
 LISP ?= sbcl
 SOURCES := $(wildcard *.lisp) $(wildcard *.asd)
 BUILDAPP = ./bin/buildapp
+TEST_SOURCES=$(shell find test/ -name '*.lisp')
 
-.PHONY: clean install release deb rpm
+.PHONY: clean install release deb rpm test
 
 all: $(APP_OUT)
+
+test: $(TEST_SOURCES)
+	@sbcl --load run-tests.lisp \
+		--quit
 
 release: deb rpm
 
