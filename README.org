@@ -1,5 +1,7 @@
 * lxc-wrapper
 
+[[https://travis-ci.org/Ralt/lxc-wrapper.svg][Travis build status]]
+
 An opinionated LXC wrapper.
 
 ** Motivation

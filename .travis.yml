@@ -26,8 +26,7 @@ before_script:
 # determining whether a test suite fails or succeeds.
 script:
   - cl -e '(ql:quickload :lxc-wrapper)
-           (asdf:test-system :lxc-wrapper)
-	   (uiop:quit 0)';
+           (asdf:test-system :lxc-wrapper)';
     [ $? -eq 1 ]
 
   # testing (albeit not extensively) that, even when invoked directly,
