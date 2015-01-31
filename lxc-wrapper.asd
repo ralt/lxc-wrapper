@@ -1,3 +1,4 @@
+;; -*- mode: common-lisp -*-
 (asdf:defsystem #:lxc-wrapper
   :description "An opinionated LXC wrapper"
   :author "Florian Margaine <florian@margaine.com>"
