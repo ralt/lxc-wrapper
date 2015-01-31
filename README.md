@@ -1,3 +1,40 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [lxc-wrapper](#lxc-wrapper)
+  - [Motivation](#motivation)
+  - [What it does](#what-it-does)
+  - [Example session](#example-session)
+  - [Why not docker?!](#why-not-docker)
+  - [Installation](#installation)
+  - [CLI Usage](#cli-usage)
+  - [Requirements](#requirements)
+  - [Limitations](#limitations)
+  - [Development](#development)
+  - [API](#api)
+    - [Functions](#functions)
+      - [=create=](#create)
+      - [=destroy=](#destroy)
+      - [=start=](#start)
+      - [=stop=](#stop)
+      - [=ls=](#ls)
+    - [Variables](#variables)
+      - [=\*lxc-default-folder\*=](#\lxc-default-folder\)
+      - [=\*lxc-rootfs\*=](#\lxc-rootfs\)
+      - [=\*lxc-folder\*=](#\lxc-folder\)
+      - [=\*lxc-host-extension\*=](#\lxc-host-extension\)
+      - [=\*lxc-gateway\*=](#\lxc-gateway\)
+      - [=\*default-dns-nameserver\*=](#\default-dns-nameserver\)
+      - [=\*hosts-file\*=](#\hosts-file\)
+      - [=\*lxc-network\*=](#\lxc-network\)
+      - [=\*ip-regex\*=](#\ip-regex\)
+      - [=\*lxc-interfaces-file\*=](#\lxc-interfaces-file\)
+      - [=\*default-shell\*=](#\default-shell\)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # lxc-wrapper
 
 [![Build Status](https://travis-ci.org/Ralt/lxc-wrapper.svg?branch=master)](https://travis-ci.org/Ralt/lxc-wrapper)
@@ -25,37 +62,33 @@ automate what I do with them.
 
 Starting a new project "bar" based on the "foo" stack.
 
-```
-$ sudo lxc-wrapper --base foo create bar
-Created container bar as copy of foo
-$ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
-----------------------------------------------------
-bar       STOPPED  -         -     -       NO
-foo       STOPPED  -         -     -       NO
-$ ls ~/lxc/
-foo bar
-$ ls ~/lxc/bar
-bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
-$ sudo lxc-wrapper start bar
-$ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
-----------------------------------------------------
-bar       STARTED  10.0.3.4  -     -       NO
-foo       STOPPED  -         -     -       NO
-$ ssh ubuntu@bar.lxc
-```
+    $ sudo lxc-wrapper --base foo create bar
+    Created container bar as copy of foo
+    $ sudo lxc-wrapper ls
+    NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
+    ----------------------------------------------------
+    bar       STOPPED  -         -     -       NO
+    foo       STOPPED  -         -     -       NO
+    $ ls ~/lxc/
+    foo bar
+    $ ls ~/lxc/bar
+    bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+    $ sudo lxc-wrapper start bar
+    $ sudo lxc-wrapper ls
+    NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
+    ----------------------------------------------------
+    bar       STARTED  10.0.3.4  -     -       NO
+    foo       STOPPED  -         -     -       NO
+    $ ssh ubuntu@bar.lxc
 
 When done with the project:
 
-```
-$ sudo lxc-wrapper stop bar
-$ sudo lxc-wrapper destroy bar
-$ sudo lxc-wrapper ls
-NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
-----------------------------------------------------
-foo       STOPPED  -         -     -       NO
-```
+    $ sudo lxc-wrapper stop bar
+    $ sudo lxc-wrapper destroy bar
+    $ sudo lxc-wrapper ls
+    NAME      STATE    IPV4      IPV6  GROUPS  AUTOSTART
+    ----------------------------------------------------
+    foo       STOPPED  -         -     -       NO
 
 ## Why not docker?!
 
@@ -82,10 +115,10 @@ You can:
 -   Download the sources and run `make && make install`. Only `sbcl` is
     needed.
 -   Download and install the [rpm
-    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper-1.0.0-1.x86_64.rpm)
+    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper-1.0.1-1.x86_64.rpm)
     if you're on Fedora/CentOS/Red Hat (x86~64~ only)
 -   Download and install the [deb
-    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.0/lxc-wrapper_1.0.0_amd64.deb)
+    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper_1.0.1_amd64.deb)
     if you're on Ubuntu/Debian (amd64 only)
 -   Download and install the
     [PKGBUILD](https://aur.archlinux.org/packages/lxc-wrapper/) if
