@@ -9,7 +9,7 @@ QUICKLISP_SCRIPT=http://beta.quicklisp.org/quicklisp.lisp
 LOCAL_OPTS=--noinform --noprint --disable-debugger --no-sysinit --no-userinit
 QL_OPTS=--load $(QL_LOCAL)/setup.lisp
 LISP ?= sbcl
-SOURCES := $(wildcard *.lisp) $(wildcard *.asd)
+SOURCES := $(wildcard src/*.lisp) $(wildcard *.asd)
 BUILDAPP = ./bin/buildapp
 TEST_SOURCES=$(shell find test/ -name '*.lisp')
 
