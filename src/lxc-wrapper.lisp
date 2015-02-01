@@ -12,9 +12,11 @@
 
 (defcommand create (name args)
   "Creates an LXC"
-  (if (getf args :base)
-      (create-clone (getf args :base) name)
-      (create-base name (getf args :template))))
+  (destructuring-bind (&key base template)
+      args
+    (if base
+	(create-clone base name)
+	(create-base name template))))
 
 (defun create-clone (base name)
   "Creates a clone of another LXC"

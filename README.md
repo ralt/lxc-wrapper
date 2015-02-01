@@ -228,6 +228,8 @@ The Makefile supports the following tasks:
 ```lisp
 (defcommand create (name args)
   "Creates an LXC"
+  (destructuring-bind (&key base template)
+      args
 ```
 
 Creates an LXC.
