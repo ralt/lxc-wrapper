@@ -17,6 +17,7 @@ An opinionated LXC wrapper.
 - [CLI Usage](#cli-usage)
 - [Requirements](#requirements)
 - [Limitations](#limitations)
+- [Roadmap](#roadmap)
 - [Development](#development)
 - [API](#api)
   - [Functions](#functions)
@@ -203,9 +204,7 @@ Known limitations:
 
 Ideas I want to eventually implement:
 
-- `lxc-wrapper package` to create a template from an existing
-  container.
-- 
+- `package`: to create a template from an existing container.
 
 ## Development
 
