@@ -28,14 +28,14 @@ deb: $(APP_OUT)
 	@fpm -p dist/ \
 		-d "lxc (>= 1.0)" \
 		-s dir -t deb -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
-	@gpg --output dist/$(APP_NAME)-deb.sig \
+	@gpg --output dist/$(APP_NAME)_$(VERSION)-deb.sig \
 		--detach-sig dist/$(APP_NAME)_$(VERSION)_amd64.deb
 
 rpm: $(APP_OUT)
 	@fpm -p dist/ \
 		-d "lxc" \
 		-s dir -t rpm -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
-	@gpg --output dist/$(APP_NAME)-rpm.sig \
+	@gpg --output dist/$(APP_NAME)_$(VERSION)-rpm.sig \
 		--detach-sig dist/$(APP_NAME)-$(VERSION)-1.x86_64.rpm
 
 install: $(APP_OUT)
