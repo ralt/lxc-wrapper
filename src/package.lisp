@@ -2,6 +2,7 @@
 
 (defpackage #:lxc-wrapper
   (:use #:cl)
+  (:shadow :package)
   (:export
    :main
    ;; Functions

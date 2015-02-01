@@ -19,6 +19,7 @@
 (defvar *lxc-network* '(10 0 3 0))
 (defvar *ip-regex* "^(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)")
 (defvar *lxc-interfaces-file* #p"etc/network/interfaces")
+(defvar *lxc-package-extension* ".tar.gz")
 
 (defmacro defcommand (name args &body body)
   `(progn
@@ -55,6 +56,7 @@
 				*default-dns-nameserver*
 				*hosts-file*
 				*lxc-interfaces-file*
+				*lxc-package-extension*
 				*default-shell*)
 	  (if command
 	      (funcall (gethash (string-upcase command) *commands*) name (cdr parsed-args))

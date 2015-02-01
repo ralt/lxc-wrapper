@@ -13,7 +13,7 @@
 (defcommand create (name args)
   "Creates an LXC"
   (destructuring-bind (&key base template)
-      args
+      (car args)
     (if base
 	(create-clone base name)
 	(create-base name template))))
@@ -69,6 +69,22 @@
       "lxc-destroy"
       "--name" cli-name)
     (remove-lxc-leftovers cli-name)))
+
+(defcommand package (name &rest args)
+  "Packages an LXC"
+  (let* ((cli-name (adapt-arg name))
+	 (archive (concatenate 'string cli-name *lxc-package-extension*)))
+    (when (not (equal args '(nil)))
+      (destructuring-bind (&key archive-path)
+	  (car args)
+	(setf archive archive-path)))
+    (format t "Packaging ~A...~%" cli-name)
+    (run
+      "tar"
+      "-C" (merge-pathnames cli-name *lxc-default-folder*)
+      "-czf" archive
+      ".")
+    (format t "Created ~A~%" archive)))
 
 (defun adapt-arg (name)
   "Adapts an argument to string"
