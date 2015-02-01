@@ -8,6 +8,7 @@ An opinionated LXC wrapper.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [LX-What?](#lx-what)
 - [Motivation](#motivation)
 - [What it does](#what-it-does)
 - [Example session](#example-session)
