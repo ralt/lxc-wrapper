@@ -6,8 +6,10 @@
   :serial t
   :depends-on ("external-program" "cl-ppcre" "alexandria" "apply-argv")
   :in-order-to ((asdf:test-op (asdf:test-op :lxc-wrapper-test)))
-  :components ((:file "package")
-	       (:file "cli")
-	       (:file "lxc-wrapper")
-	       (:file "ip")
-	       (:file "lxc")))
+  :components ((:module "src"
+			:components
+			((:file "package")
+			 (:file "cli")
+			 (:file "lxc-wrapper")
+			 (:file "ip")
+			 (:file "lxc")))))
