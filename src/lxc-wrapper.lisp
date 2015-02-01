@@ -13,7 +13,7 @@
 (defcommand create (name args)
   "Creates an LXC"
   (destructuring-bind (&key base template)
-      (car args)
+      args
     (if base
 	(create-clone base name)
 	(create-base name template))))
@@ -22,37 +22,45 @@
   "Creates a clone of another LXC"
   (let ((cli-base (adapt-arg base))
 	(cli-name (adapt-arg name)))
+    (format t "Cloning ~A..." cli-base)
     (run
       "lxc-clone"
       "--orig" cli-base
       "--new" cli-name)
+    (format t " done.~%")
     (init-lxc cli-name *hosts-file*)))
 
 (defun create-base (name template)
   "Creates an LXC from no base"
   (let ((cli-name (adapt-arg name))
 	(cli-template (adapt-arg template)))
+    (format t "Creating ~A..." cli-name)
     (run
       "lxc-create"
       "--name" cli-name
       "-t" cli-template)
+    (format t " done.~%")
     (init-lxc cli-name *hosts-file*)))
 
 (defcommand start (name &rest args)
   "Starts an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
+    (format t "Starting ~A..." cli-name)
     (run
       "lxc-start"
-      "--name" cli-name)))
+      "--name" cli-name)
+    (format t " done.~%")))
 
 (defcommand stop (name &rest args)
   "Stops an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
+    (format t "Stopping ~A..." cli-name)
     (run
       "lxc-stop"
-      "--name" cli-name)))
+      "--name" cli-name)
+    (format t " done.~%")))
 
 (defcommand ls (&rest args)
   "Lists all the LXC"
@@ -65,10 +73,14 @@
   "Destroys an LXC and its leftovers"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
+    (format t "Destroying ~A..." cli-name)
     (run
       "lxc-destroy"
       "--name" cli-name)
-    (remove-lxc-leftovers cli-name)))
+    (format t " done.~%")
+    (format t "Removing leftovers...")
+    (remove-lxc-leftovers cli-name)
+    (format t " done.~%")))
 
 (defcommand package (name &rest args)
   "Packages an LXC"
@@ -86,6 +98,23 @@
       ".")
     (format t "Created ~A~%" archive)))
 
+(defcommand deploy (name args)
+  "Deploys an archive created by lxc-wrapper"
+  (let* ((cli-name (adapt-arg name))
+	 (lxc-path (merge-pathnames (concatenate 'string cli-name "/")
+				    *lxc-default-folder*)))
+    (destructuring-bind (&key archive)
+	args
+      (run
+	"mkdir" "-p" lxc-path)
+      (format t "Deploying ~A..." cli-name)
+      (run
+	"tar"
+	"xf" archive
+	"-C" lxc-path)
+      (fix-lxc-config cli-name lxc-path *lxc-config*)
+      (format t " done.~%")
+      (init-lxc cli-name *hosts-file*))))
 (defun adapt-arg (name)
   "Adapts an argument to string"
   (when (symbolp name)
