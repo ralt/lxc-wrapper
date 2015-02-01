@@ -40,6 +40,25 @@ An opinionated LXC wrapper.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## LX-What?
+
+LXC, aka Linux Containers. In case you don't know what they are, it's
+basically virtual machines without emulating the hardware. In
+technical details, it's chroot on steroids, because the filesystem,
+processes and networking are separated from the host. More information
+[here][0].
+
+This technology is getting a lot of traction since ~2 years, because
+it allows people to create isolated environments very quickly, very
+cheaply. Fedora 21, for example, will have each application run in a
+different container. Deploying containers on AWS lets you build
+multi-tier architectures for cheap, etc etc. There are many
+applications.
+
+I personally use them as "VMs" for my projects (each project gets a
+VM). And lxc-wrapper is there to help me with that. I think this is a
+common usage though, so I thought it was worth sharing.
+
 ## Motivation
 
 I use LXC in a very opinionated way, and has some manual maintenance to
@@ -361,3 +380,6 @@ The shell used by the commands.
 ## License
 
 MIT License.
+
+
+  [0]: http://en.wikipedia.org/wiki/LXC
