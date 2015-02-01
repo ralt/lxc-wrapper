@@ -71,32 +71,32 @@ Wrapper around lxc for an opinionated workflow.
 
 Commands:
 
-~Tcreate NAME
-~T~Tcreates a container named NAME
+	create NAME
+		creates a container named NAME
 
-~T~TOptions (must be BEFORE the command):
-~T~T~T--base=BASE
-~T~T~T~Tclone BASE
-~T~T~T--template=TEMPLATE
-~T~T~T~Tuse the TEMPLATE lxc template
-~T~T~T--lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extension, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
+		Options (must be BEFORE the command):
+			--base=BASE
+				clone BASE
+			--template=TEMPLATE
+				use the TEMPLATE lxc template
+			--lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extension, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
 
-~Tstart NAME
-~T~Tstarts the container named NAME
+	start NAME
+		starts the container named NAME
 
-~Tstop NAME
-~T~Tstops the container named NAME
+	stop NAME
+		stops the container named NAME
 
-~Tls
-~T~Tlists the containers
+	ls
+		lists the containers
 
-~Tdestroy NAME
-~T~Tdestroys the container named NAME
+	destroy NAME
+		destroys the container named NAME
 
-~T~TOptions (must be BEFORE the command):
-~T~T~T--lxc-folder, --lxc-host-extension, --hosts-file
+		Options (must be BEFORE the command):
+			--lxc-folder, --lxc-host-extension, --hosts-file
 
-~TOptions for all commands (must be BEFORE the command):
-~T~T--default-shell
+	Options for all commands (must be BEFORE the command):
+		--default-shell
 
 "))
