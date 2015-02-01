@@ -17,7 +17,6 @@ An opinionated LXC wrapper.
 - [CLI Usage](#cli-usage)
 - [Requirements](#requirements)
 - [Limitations](#limitations)
-- [Roadmap](#roadmap)
 - [Development](#development)
 - [API](#api)
   - [Functions](#functions)
@@ -26,6 +25,8 @@ An opinionated LXC wrapper.
     - [`start`](#start)
     - [`stop`](#stop)
     - [`ls`](#ls)
+    - [`package`](#package)
+    - [`deploy`](#deploy)
   - [Variables](#variables)
     - [`*lxc-default-folder*`](#lxc-default-folder)
     - [`*lxc-rootfs*`](#lxc-rootfs)
@@ -38,6 +39,8 @@ An opinionated LXC wrapper.
     - [`*ip-regex*`](#ip-regex)
     - [`*lxc-interfaces-file*`](#lxc-interfaces-file)
     - [`*default-shell*`](#default-shell)
+    - [`*lxc-package-extension*`](#lxc-package-extension)
+    - [`*lxc-config*`](#lxc-config)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -153,33 +156,44 @@ Wrapper around lxc for an opinionated workflow.
 
 Commands:
 
- create NAME
-  creates a container named NAME
+        create NAME
+                creates a container named NAME
 
-  Options (must be BEFORE the command):
-   --base=BASE
-    clone BASE
-   --template=TEMPLATE
-    use the TEMPLATE lxc template
-   --lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extension, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
+                Options (must be BEFORE the command):
+                        --base=BASE
+                                clone BASE
+                        --template=TEMPLATE
+                                use the TEMPLATE lxc template
+                        --lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extens
+ion, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file    
 
- start NAME
-  starts the container named NAME
+        start NAME
+                starts the container named NAME
 
- stop NAME
-  stops the container named NAME
+        stop NAME
+                stops the container named NAME
 
- ls
-  lists the containers
+        ls
+                lists the containers
 
- destroy NAME
-  destroys the container named NAME
+        destroy NAME
+                destroys the container named NAME
 
-  Options (must be BEFORE the command):
-   --lxc-folder, --lxc-host-extension, --hosts-file
+                Options (must be BEFORE the command):
+                        --lxc-folder, --lxc-host-extension, --hosts-file
 
- Options for all commands (must be BEFORE the command):
-  --default-shell
+        package NAME
+                packages the container named NAME
+
+                Options (must be BEFORE the command):
+                        --archive-path=PATH
+                                the path of the archive
+
+        deploy --archive ARCHIVE NAME
+                deploys the ARCHIVE in a container named NAME
+
+        Options for all commands (must be BEFORE the command):
+                --default-shell
 ```
 
 ## Requirements
@@ -199,12 +213,6 @@ Known limitations:
 - Only /24 subnetworks supported. Which means you can only make 254
   containers **with lxc-wrapper** on one host.
 - Autostart management not supported yet.
-
-## Roadmap
-
-Ideas I want to eventually implement:
-
-- `package`: to create a template from an existing container.
 
 ## Development
 
@@ -293,6 +301,26 @@ Stops an LXC. The argument can be a string or a symbol.
 ```
 
 Returns the fancy output of the list of LXCs.
+
+#### `package`
+
+```lisp
+(defcommand package (name)
+  "Packages an LXC"
+```
+
+Packages an LXC into an shareable archive file.
+
+#### `deploy`
+
+```lisp
+(defcommand deploy (name args)
+  "Deploys an archive created by lxc-wrapper"
+  (destructuring-bind (&key archive)
+    args
+```
+
+Deploys an archive created by `lxc-wrapper package`.
 
 ### Variables
 
@@ -386,6 +414,22 @@ Used by: `create`, `destroy`, `start`, `stop`, `ls`
 Default value: `/bin/bash`
 
 The shell used by the commands.
+
+#### `*lxc-package-extension*`
+
+Used by: `package`
+
+Default value: `.tar.gz`
+
+The extension to give to archives created by `package`.
+
+#### `*lxc-config*`
+
+Used by: `deploy`
+
+Default value: `#p"config"`
+
+The name of the configuration file of the containers.
 
 ## License
 

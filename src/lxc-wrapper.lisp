@@ -100,11 +100,11 @@
 
 (defcommand deploy (name args)
   "Deploys an archive created by lxc-wrapper"
-  (let* ((cli-name (adapt-arg name))
-	 (lxc-path (merge-pathnames (concatenate 'string cli-name "/")
-				    *lxc-default-folder*)))
-    (destructuring-bind (&key archive)
-	args
+  (destructuring-bind (&key archive)
+      args
+    (let* ((cli-name (adapt-arg name))
+	   (lxc-path (merge-pathnames (concatenate 'string cli-name "/")
+				      *lxc-default-folder*)))
       (run
 	"mkdir" "-p" lxc-path)
       (format t "Deploying ~A..." cli-name)
@@ -115,6 +115,7 @@
       (fix-lxc-config cli-name lxc-path *lxc-config*)
       (format t " done.~%")
       (init-lxc cli-name *hosts-file*))))
+
 (defun adapt-arg (name)
   "Adapts an argument to string"
   (when (symbolp name)

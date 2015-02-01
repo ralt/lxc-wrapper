@@ -100,6 +100,16 @@ Commands:
 		Options (must be BEFORE the command):
 			--lxc-folder, --lxc-host-extension, --hosts-file
 
+	package NAME
+		packages the container named NAME
+
+		Options (must be BEFORE the command):
+			--archive-path=PATH
+				the path of the archive
+
+	deploy --archive ARCHIVE NAME
+		deploys the ARCHIVE in a container named NAME
+
 	Options for all commands (must be BEFORE the command):
 		--default-shell
 
