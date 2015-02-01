@@ -68,14 +68,14 @@ automate what I do with them.
 
 ## What it does
 
--   I always forget the `--name` option. lxc-wrapper assumes that the
-    argument is the name of the container.
--   Writing `--fancy` when I want an ls should be the default. No
-    argument needed.
--   When creating a container, it assigns a static IP to it, adds an
-    entry to the hosts file so that the container is reachable, and adds
-    a symbolic link to the rootfs in a defined folder.
--   Destroying a container cleans up behind itself.
+- I always forget the `--name` option. lxc-wrapper assumes that the
+  argument is the name of the container.
+- Writing `--fancy` when I want an ls should be the default. No
+  argument needed.
+- When creating a container, it assigns a static IP to it, adds an
+  entry to the hosts file so that the container is reachable, and adds
+  a symbolic link to the rootfs in a defined folder.
+- Destroying a container cleans up behind itself.
 
 ## Example session
 
@@ -115,33 +115,33 @@ Good question.
 
 Several reasons:
 
--   Docker is based on an overlayfs system all the time. My usage is
-    simply having long-term projects, so docker's containers don't make
-    sense.
--   Docker's networking doesn't allow me to assign a static IP to a
-    container. It makes it inconvenient, especially for long-term
-    containers, to connect to them via ssh.
--   Docker's containers' filesystems are hidden when they're not
-    started. I don't want to start a container just to get some random
-    file in it.
--   Docker CLI are not a very beautiful API. lxc-wrapper is supposed to
-    be **simple** to use.
+- Docker is based on an overlayfs system all the time. My usage is
+  simply having long-term projects, so docker's containers don't make
+  sense.
+- Docker's networking doesn't allow me to assign a static IP to a
+  container. It makes it inconvenient, especially for long-term
+  containers, to connect to them via ssh.
+- Docker's containers' filesystems are hidden when they're not
+  started. I don't want to start a container just to get some random
+  file in it.
+- Docker CLI are not a very beautiful API. lxc-wrapper is supposed to
+  be **simple** to use.
 
 ## Installation
 
 You can:
 
--   Download the sources and run `make && make install`. Only `sbcl` is
-    needed.
--   Download and install the [rpm
-    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper-1.0.1-1.x86_64.rpm)
-    if you're on Fedora/CentOS/Red Hat (x86~64~ only)
--   Download and install the [deb
-    file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper_1.0.1_amd64.deb)
-    if you're on Ubuntu/Debian (amd64 only)
--   Download and install the
-    [PKGBUILD](https://aur.archlinux.org/packages/lxc-wrapper/) if
-    you're on ArchLinux
+- Download the sources and run `make && make install`. Only `sbcl` is
+  needed.
+- Download and install the [rpm
+  file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper-1.0.1-1.x86_64.rpm)
+  if you're on Fedora/CentOS/Red Hat (x86~64~ only)
+- Download and install the [deb
+  file](https://github.com/Ralt/lxc-wrapper/releases/download/1.0.1/lxc-wrapper_1.0.1_amd64.deb)
+  if you're on Ubuntu/Debian (amd64 only)
+- Download and install the
+  [PKGBUILD](https://aur.archlinux.org/packages/lxc-wrapper/) if
+  you're on ArchLinux
 
 ## CLI Usage
 
@@ -195,29 +195,37 @@ with sudo, so that `~` matches your user folder)
 
 Known limitations:
 
--   Only /24 subnetworks supported. Which means you can only make 254
-    containers **with lxc-wrapper** on one host.
--   Autostart management not supported yet.
+- Only /24 subnetworks supported. Which means you can only make 254
+  containers **with lxc-wrapper** on one host.
+- Autostart management not supported yet.
+
+## Roadmap
+
+Ideas I want to eventually implement:
+
+- `lxc-wrapper package` to create a template from an existing
+  container.
+- 
 
 ## Development
 
 You need:
 
--   SBCL
--   QuickLisp
+- SBCL
+- QuickLisp
 
 To create a CLI utility, you need:
 
--   buildapp
+- buildapp
 
 The Makefile supports the following tasks:
 
--   `all`: builds the `./dist/usr/bin/lxc-wrapper` binary, along with
-    downloading dependencies in a local quicklisp environment
--   `clean`: deletes the dependencies and the binary
--   `install`: copies the `./dist/usr/binlxc-wrapper` binary to `DESTDIR`
-    which is `/usr/bin` by default
--   `test`: runs tests; requires a functional lisp environment
+- `all`: builds the `./dist/usr/bin/lxc-wrapper` binary, along with
+  downloading dependencies in a local quicklisp environment
+- `clean`: deletes the dependencies and the binary
+- `install`: copies the `./dist/usr/binlxc-wrapper` binary to `DESTDIR`
+  which is `/usr/bin` by default
+- `test`: runs tests; requires a functional lisp environment
 
 ## API
 
@@ -241,9 +249,9 @@ template.
 
 The opinionated part of lxc-wrapper comes here. For every new LXC:
 
--   It gives it a static IP
--   It adds the static IP to the host's /etc/hosts
--   It makes a symlink to the rootfs
+- It gives it a static IP
+- It adds the static IP to the host's /etc/hosts
+- It makes a symlink to the rootfs
 
 #### `destroy`
 
@@ -257,8 +265,8 @@ Destroys an LXC.
 The opinionated part of lxc-wrapper comes here too. When an LXC is
 destroyed:
 
--   It destroys the entry in the host's /etc/hosts
--   It deletes the symlink to the rootfs
+- It destroys the entry in the host's /etc/hosts
+- It deletes the symlink to the rootfs
 
 #### `start`
 
