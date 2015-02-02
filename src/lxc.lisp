@@ -1,5 +1,29 @@
 (in-package #:lxc-wrapper)
 
+(defun create-clone (base name)
+  "Creates a clone of another LXC"
+  (let ((cli-base (adapt-arg base))
+	(cli-name (adapt-arg name)))
+    (format t "Cloning ~A..." cli-base)
+    (run
+      "lxc-clone"
+      "--orig" cli-base
+      "--new" cli-name)
+    (format t " done.~%")
+    (init-lxc cli-name *hosts-file*)))
+
+(defun create-base (name template)
+  "Creates an LXC from no base"
+  (let ((cli-name (adapt-arg name))
+	(cli-template (adapt-arg template)))
+    (format t "Creating ~A..." cli-name)
+    (run
+      "lxc-create"
+      "--name" cli-name
+      "-t" cli-template)
+    (format t " done.~%")
+    (init-lxc cli-name *hosts-file*)))
+
 (defun init-lxc (name file)
   "Initializes the LXC after creating it. It means:
 - Giving it a static IP
