@@ -71,8 +71,6 @@
 	      (help))))
     (error () (format *error-output* "An internal error occured. Are you sure the options are before the command?~%"))))
 
-(defcommand help (&rest args)
-  "Help output"
 (defcommand help (name args)
   "help
 	Shows this help"
