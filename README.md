@@ -283,8 +283,9 @@ The opinionated part of lxc-wrapper comes here. For every new LXC:
 #### `destroy`
 
 ```lisp
-(defcommand destroy (name)
+(defcommand destroy (name args)
   "Destroys an LXC and its leftovers"
+  (declare (ignore args))
 ```
 
 Destroys an LXC.
@@ -298,8 +299,9 @@ destroyed:
 #### `start`
 
 ```lisp
-(defcommand start (name)
+(defcommand start (name args)
   "Starts an LXC"
+  (declare (ignore args))
 ```
 
 Starts an LXC. The argument can be a string or a symbol.
@@ -307,8 +309,9 @@ Starts an LXC. The argument can be a string or a symbol.
 #### `stop`
 
 ```lisp
-(defcommand stop (name)
+(defcommand stop (name args)
   "Stops an LXC"
+  (declare (ignore args))
 ```
 
 Stops an LXC. The argument can be a string or a symbol.
@@ -316,8 +319,9 @@ Stops an LXC. The argument can be a string or a symbol.
 #### `ls`
 
 ```lisp
-(defcommand ls ()
+(defcommand ls (name args)
   "Lists all the LXC"
+  (declare (ignore args))
 ```
 
 Returns the fancy output of the list of LXCs.
@@ -325,7 +329,7 @@ Returns the fancy output of the list of LXCs.
 #### `package`
 
 ```lisp
-(defcommand package (name)
+(defcommand package (name args)
   "Packages an LXC"
 ```
 

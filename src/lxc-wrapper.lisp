@@ -42,7 +42,7 @@
     (format t " done.~%")
     (init-lxc cli-name *hosts-file*)))
 
-(defcommand start (name &rest args)
+(defcommand start (name args)
   "Starts an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
@@ -52,7 +52,7 @@
       "--name" cli-name)
     (format t " done.~%")))
 
-(defcommand stop (name &rest args)
+(defcommand stop (name args)
   "Stops an LXC"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
@@ -62,14 +62,15 @@
       "--name" cli-name)
     (format t " done.~%")))
 
-(defcommand ls (&rest args)
+(defcommand ls (name args)
   "Lists all the LXC"
+  (declare (ignore args))
   (declare (ignore args))
   (run
    "lxc-ls"
    "--fancy"))
 
-(defcommand destroy (name &rest args)
+(defcommand destroy (name args)
   "Destroys an LXC and its leftovers"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
@@ -82,13 +83,13 @@
     (remove-lxc-leftovers cli-name)
     (format t " done.~%")))
 
-(defcommand package (name &rest args)
+(defcommand package (name args)
   "Packages an LXC"
   (let* ((cli-name (adapt-arg name))
 	 (archive (concatenate 'string cli-name *lxc-package-extension*)))
-    (when (not (equal args '(nil)))
+    (when args
       (destructuring-bind (&key archive-path)
-	  (car args)
+	  args
 	(setf archive archive-path)))
     (format t "Packaging ~A...~%" cli-name)
     (run
