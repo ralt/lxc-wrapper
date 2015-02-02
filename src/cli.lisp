@@ -2,10 +2,15 @@
 
 ;; Default behavior is to get in the debugger,
 ;; change that.
+(defvar *debug* nil)
+(defvar *original-hook* *debugger-hook*)
 (setf *debugger-hook*
       (lambda (c h)
-	(declare (ignore c h))
-	(uiop:quit -1)))
+	(if *debug*
+	    (funcall *original-hook* c h)
+	    (progn
+	      (format t "An internal error occured. Are you sure the options are before the command?~%")
+	      (uiop:quit -1)))))
 
 (defvar *commands* (make-hash-table :test #'equal))
 (defvar *doc-strings* (make-hash-table :test #'equal))
@@ -55,7 +60,8 @@
 	     (command (caar parsed-args))
 	     (name (cadar parsed-args)))
 	;; *lxc-network* and *ip-regex* are voluntarily not available
-	(default-variables-let (*lxc-default-folder*
+	(default-variables-let (*debug*
+				*lxc-default-folder*
 				*lxc-rootfs*
 				*lxc-folder*
 				*lxc-host-extension*
@@ -68,8 +74,7 @@
 				*default-shell*)
 	  (if command
 	      (funcall (gethash (string-upcase command) *commands*) name (cdr parsed-args))
-	      (help))))
-    (error () (format *error-output* "An internal error occured. Are you sure the options are before the command?~%"))))
+	      (help nil nil))))))
 
 (defcommand help (name args)
   "help
@@ -91,5 +96,6 @@ Commands:
   (format t "
 	Overridable variables and default values for all commands (must be BEFORE the command):
 		--default-shell=/bin/bash
+		--debug
 
 "))
