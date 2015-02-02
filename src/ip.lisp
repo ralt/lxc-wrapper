@@ -74,9 +74,9 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet static
-~Taddress ~A
-~Tgateway ~A
-~Tdns-nameserver ~A~%" ip gateway dns))))
+	address ~A
+	gateway ~A
+	dns-nameserver ~A~%" ip gateway dns))))
 
 (defun path-lxc-interfaces (name)
   "Returns the path to the LXC interfaces file"
