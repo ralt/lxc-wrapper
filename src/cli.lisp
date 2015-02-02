@@ -8,6 +8,7 @@
 	(uiop:quit -1)))
 
 (defvar *commands* (make-hash-table :test #'equal))
+(defvar *doc-strings* (make-hash-table :test #'equal))
 (defvar *lxc-default-folder* #p"/var/lib/lxc/")
 (defvar *lxc-rootfs* #p"rootfs/")
 (defvar *lxc-folder* (merge-pathnames #p"lxc/" (user-homedir-pathname)))
@@ -22,11 +23,16 @@
 (defvar *lxc-package-extension* ".tar.gz")
 (defvar *lxc-config* #p"config")
 
-(defmacro defcommand (name args &body body)
-  `(progn
-     (defun ,name ,args
-       ,@body)
-     (setf (gethash (symbol-name ',name) *commands*) #',name)))
+(defmacro defcommand (name args doc-string &body body)
+  ;; Using this to be able to use (check-type)
+  (let ((doc (gensym)))
+    `(progn
+       (let ((,doc ,doc-string))
+	 (check-type ,doc string)
+	 (defun ,name ,args
+	   ,@body)
+	 (setf (gethash (symbol-name ',name) *commands*) #',name)
+	 (setf (gethash (symbol-name ',name) *doc-strings*) ,doc)))))
 
 (defmacro default-variables-let (vars &body body)
   `(let (,@(loop for var in vars
@@ -67,50 +73,25 @@
 
 (defcommand help (&rest args)
   "Help output"
+(defcommand help (name args)
+  "help
+	Shows this help"
+  (declare (ignore name))
   (declare (ignore args))
-  (format
-   t
-   "Usage: lxc-wrapper [OPTIONS] [COMMAND]
+  (format t
+	  "Usage: lxc-wrapper [OPTIONS] [COMMAND]
 Wrapper around lxc for an opinionated workflow.
 
 Commands:
-
-	create NAME
-		creates a container named NAME
-
-		Options (must be BEFORE the command):
-			--base=BASE
-				clone BASE
-			--template=TEMPLATE
-				use the TEMPLATE lxc template
-			--lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extension, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
-
-	start NAME
-		starts the container named NAME
-
-	stop NAME
-		stops the container named NAME
-
-	ls
-		lists the containers
-
-	destroy NAME
-		destroys the container named NAME
-
-		Options (must be BEFORE the command):
-			--lxc-folder, --lxc-host-extension, --hosts-file
-
-	package NAME
-		packages the container named NAME
-
-		Options (must be BEFORE the command):
-			--archive-path=PATH
-				the path of the archive
-
-	deploy --archive ARCHIVE NAME
-		deploys the ARCHIVE in a container named NAME
-
-	Options for all commands (must be BEFORE the command):
-		--default-shell
+")
+  (maphash #'(lambda (name doc-string)
+	       (declare (ignore name))
+	       (format t
+		       "~%~{	~A~%~}"
+		       (cl-ppcre:split "\\n" doc-string)))
+	   *doc-strings*)
+  (format t "
+	Overridable variables and default values for all commands (must be BEFORE the command):
+		--default-shell=/bin/bash
 
 "))

@@ -11,7 +11,23 @@
      :environment (list (cons "SHELL" *default-shell*))))
 
 (defcommand create (name args)
-  "Creates an LXC"
+  "create NAME
+	Creates a container named NAME
+
+	Options (must be BEFORE the command):
+		--base=BASE
+			Clones the BASE container
+		--template=TEMPLATE
+			Uses the TEMPLATE lxc template
+
+	Overridable variables and default values (must be BEFORE the command):
+		--lxc-default-folder=/var/lib/lxc/
+		--lxc-rootfs=rootfs/
+		--lxc-folder=~/lxc/
+		--lxc-host-extension=.lxc
+		--default-dns-nameserver=8.8.8.8
+		--hosts-file=/etc/hosts
+		--lxc-interfaces-file=etc/network/interfaces"
   (destructuring-bind (&key base template)
       args
     (if base
@@ -43,7 +59,8 @@
     (init-lxc cli-name *hosts-file*)))
 
 (defcommand start (name args)
-  "Starts an LXC"
+  "start NAME
+	Starts the container named NAME"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
     (format t "Starting ~A..." cli-name)
@@ -53,7 +70,8 @@
     (format t " done.~%")))
 
 (defcommand stop (name args)
-  "Stops an LXC"
+  "stop NAME
+	Stops the container named NAME"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
     (format t "Stopping ~A..." cli-name)
@@ -63,15 +81,22 @@
     (format t " done.~%")))
 
 (defcommand ls (name args)
-  "Lists all the LXC"
-  (declare (ignore args))
+  "ls
+	Lists the containers"
+  (declare (ignore name))
   (declare (ignore args))
   (run
    "lxc-ls"
    "--fancy"))
 
 (defcommand destroy (name args)
-  "Destroys an LXC and its leftovers"
+  "destroy NAME
+	Destroys the container named NAME
+
+	Overridable variables and default values (must be BEFORE the command):
+		--lxc-folder=~/lxc/
+		--lxc-host-extension=.lxc
+		--hosts-file=/etc/hosts"
   (declare (ignore args))
   (let ((cli-name (adapt-arg name)))
     (format t "Destroying ~A..." cli-name)
@@ -84,7 +109,16 @@
     (format t " done.~%")))
 
 (defcommand package (name args)
-  "Packages an LXC"
+  "package NAME
+	Packages the container named NAME
+
+	Options (must be BEFORE the command):
+		--archive-path=PATH
+			the path of the archive
+
+	Overridable variables and default values (must be BEFORE the command):
+		--lxc-package-extension=.tar.gz
+		--lxc-default-folder=/var/lib/lxc/"
   (let* ((cli-name (adapt-arg name))
 	 (archive (concatenate 'string cli-name *lxc-package-extension*)))
     (when args
@@ -100,7 +134,13 @@
     (format t "Created ~A~%" archive)))
 
 (defcommand deploy (name args)
-  "Deploys an archive created by lxc-wrapper"
+  "deploy --archive ARCHIVE NAME
+	Deploys the ARCHIVE archive in a container named NAME
+
+	Overridable variables and default values (must be BEFORE the command):
+		--lxc-default-folder=/var/lib/lxc/
+		--lxc-config=config
+		--hosts-file=/etc/hosts"
   (destructuring-bind (&key archive)
       args
     (let* ((cli-name (adapt-arg name))
