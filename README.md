@@ -152,50 +152,73 @@ You can:
 ## CLI Usage
 
 ```
-$ lxc-wrapper # or lxc-wrapper help
+$ lxc-wrapper help
 Usage: lxc-wrapper [OPTIONS] [COMMAND]
 Wrapper around lxc for an opinionated workflow.
 
 Commands:
 
+        help
+                Shows this help
+
         create NAME
-                creates a container named NAME
+                Creates a container named NAME
 
                 Options (must be BEFORE the command):
                         --base=BASE
-                                clone BASE
+                                Clones the BASE container
                         --template=TEMPLATE
-                                use the TEMPLATE lxc template
-                        --lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extens
-ion, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
+                                Uses the TEMPLATE lxc template
+
+                Overridable variables and default values (must be BEFORE the command):
+                        --lxc-default-folder=/var/lib/lxc/
+                        --lxc-rootfs=rootfs/
+                        --lxc-folder=~/lxc/
+                        --lxc-host-extension=.lxc
+                        --default-dns-nameserver=8.8.8.8
+                        --hosts-file=/etc/hosts
+                        --lxc-interfaces-file=etc/network/interfaces
 
         start NAME
-                starts the container named NAME
+                Starts the container named NAME
 
         stop NAME
-                stops the container named NAME
+                Stops the container named NAME
 
         ls
-                lists the containers
+                Lists the containers
 
         destroy NAME
-                destroys the container named NAME
+                Destroys the container named NAME
 
-                Options (must be BEFORE the command):
-                        --lxc-folder, --lxc-host-extension, --hosts-file
+                Overridable variables and default values (must be BEFORE the command):
+                        --lxc-folder=~/lxc/
+                        --lxc-host-extension=.lxc
+                        --hosts-file=/etc/hosts
 
         package NAME
-                packages the container named NAME
+                Packages the container named NAME
 
                 Options (must be BEFORE the command):
                         --archive-path=PATH
                                 the path of the archive
 
-        deploy --archive ARCHIVE NAME
-                deploys the ARCHIVE in a container named NAME
+                Overridable variables and default values (must be BEFORE the command):
+                        --lxc-package-extension=.tar.gz
+                        --lxc-default-folder=/var/lib/lxc/
 
-        Options for all commands (must be BEFORE the command):
-                --default-shell
+        deploy --archive ARCHIVE NAME
+                Deploys the ARCHIVE archive in a container named NAME
+
+                Overridable variables and default values (must be BEFORE the command):
+                        --lxc-default-folder=/var/lib/lxc/
+                        --lxc-config=config
+                        --hosts-file=/etc/hosts
+
+        Overridable variables and default values for all commands (must be BEFORE the c
+ommand):
+                --default-shell=/bin/bash
+
 ```
 
 ## Requirements
