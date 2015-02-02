@@ -209,6 +209,17 @@ If you want to compile yourself, you need:
 - sbcl
 - lxc
 
+And run:
+
+```
+$ git clone https://github.com/Ralt/lxc-wrapper
+$ cd lxc-wrapper
+$ make
+$ make install
+```
+
+Eventually using `sudo` for the `make install`.
+
 Tested on SBCL only, but nothing specific is used. Should work on other
 Lisp platforms.
 
