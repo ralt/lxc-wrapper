@@ -167,7 +167,7 @@ Commands:
                         --template=TEMPLATE
                                 use the TEMPLATE lxc template
                         --lxc-default-folder, --lxc-rootfs, --lxc-folder, --lxc-extens
-ion, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file    
+ion, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-file
 
         start NAME
                 starts the container named NAME
@@ -202,8 +202,15 @@ ion, --lxc-gateway, --default-dns-nameserver, --hosts-file, --lxc-interfaces-fil
 
 Linux only.
 
+If you just want to use the distributed package, that's all you need.
+
+If you want to compile yourself, you need:
+
+- sbcl
+- lxc
+
 Tested on SBCL only, but nothing specific is used. Should work on other
-platforms.
+Lisp platforms.
 
 The swank server or the CLI utility needs to be ran as root. (Ideally
 with sudo, so that `~` matches your user folder)
