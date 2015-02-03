@@ -22,7 +22,11 @@ test: $(TEST_SOURCES)
 		--eval '(asdf:test-system :lxc-wrapper)' \
 		--quit
 
-release: deb rpm
+release:
+	make clean
+	make
+	make deb
+	make rpm
 
 deb: $(APP_OUT)
 	@fpm -p dist/ \
@@ -47,6 +51,7 @@ bin:
 clean:
 	@-yes | rm -rf $(QL_LOCAL)
 	@-rm -f $(APP_OUT) deps install-deps
+	@-rm -f dist/lxc-wrapper*
 
 $(QL_LOCAL)/setup.lisp:
 	@curl -O $(QUICKLISP_SCRIPT)

@@ -4,7 +4,11 @@
   :author "Florian Margaine <florian@margaine.com>"
   :license "MIT License"
   :serial t
-  :depends-on ("external-program" "cl-ppcre" "alexandria" "apply-argv")
+  :depends-on ("external-program"
+	       "cl-ppcre"
+	       "alexandria"
+	       "apply-argv"
+	       "sb-posix")
   :in-order-to ((asdf:test-op (asdf:test-op #:lxc-wrapper-test)))
   :components ((:module "src"
 			:components

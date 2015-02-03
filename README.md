@@ -243,8 +243,8 @@ $ make install
 
 Eventually using `sudo` for the `make install`.
 
-Tested on SBCL only, but nothing specific is used. Should work on other
-Lisp platforms.
+Tested on SBCL only. There is a requirement on `sb-posix` to get the
+version number.
 
 The swank server or the CLI utility needs to be ran as root. (Ideally
 with sudo, so that `~` matches your user folder)

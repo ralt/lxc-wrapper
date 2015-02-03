@@ -72,7 +72,7 @@
 				*lxc-package-extension*
 				*lxc-config*
 				*default-shell*)
-	  (if command
+	  (if (and command (gethash (string-upcase command) *commands*))
 	      (funcall (gethash (string-upcase command) *commands*) name (cdr parsed-args))
 	      (help nil nil))))))
 
@@ -99,3 +99,11 @@ Commands:
 		--debug
 
 "))
+
+(defcommand version (name args)
+  "version
+	Shows the version of lxc-wrapper"
+  (declare (ignore name))
+  (declare (ignore args))
+  ;; load-time-value because it's built with buildapp
+  (format t "~A~%" (load-time-value (sb-posix:getenv "VERSION"))))
