@@ -2,8 +2,8 @@ APP_NAME=lxc-wrapper
 VERSION=
 LISP_FILES=$(shell find . -name '*.lisp')
 ASDF_TREE ?= ~/quicklisp/
-DIST_FOLDER=dist/usr/bin
-APP_OUT=dist/usr/bin/lxc-wrapper
+DIST_FOLDER=dist/root/usr/bin
+APP_OUT=dist/root/usr/bin/lxc-wrapper
 QL_LOCAL=$(PWD)/.quicklocal/quicklisp
 QUICKLISP_SCRIPT=http://beta.quicklisp.org/quicklisp.lisp
 LOCAL_OPTS=--noinform --noprint --disable-debugger --no-sysinit --no-userinit
@@ -13,7 +13,7 @@ SOURCES := $(wildcard src/*.lisp) $(wildcard *.asd)
 BUILDAPP = ./bin/buildapp
 TEST_SOURCES=$(shell find test/ -name '*.lisp')
 
-.PHONY: clean install release deb rpm test
+.PHONY: clean install release deb rpm test man
 
 all: $(APP_OUT)
 
@@ -25,25 +25,32 @@ test: $(TEST_SOURCES)
 release:
 	make clean
 	make
+	make man
 	make deb
 	make rpm
+
+man:
+	mkdir -p dist/root/usr/share/man/man1/
+	pandoc -s -t man manpage.md > dist/root/usr/share/man/man1/lxc-wrapper.1
+	gzip dist/root/usr/share/man/man1/lxc-wrapper.1
 
 deb: $(APP_OUT)
 	@fpm -p dist/ \
 		-d "lxc (>= 1.0)" \
-		-s dir -t deb -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
+		-s dir -t deb -n $(APP_NAME) -v $(VERSION) -C dist/root usr
 	@gpg --output dist/$(APP_NAME)_$(VERSION)-deb.sig \
 		--detach-sig dist/$(APP_NAME)_$(VERSION)_amd64.deb
 
 rpm: $(APP_OUT)
 	@fpm -p dist/ \
 		-d "lxc" \
-		-s dir -t rpm -n $(APP_NAME) -v $(VERSION) -C dist/ usr/bin
+		-s dir -t rpm -n $(APP_NAME) -v $(VERSION) -C dist/root usr
 	@gpg --output dist/$(APP_NAME)_$(VERSION)-rpm.sig \
 		--detach-sig dist/$(APP_NAME)-$(VERSION)-1.x86_64.rpm
 
 install: $(APP_OUT)
 	install $(APP_OUT) $(DESTDIR)/usr/bin
+	install -g 0 -o 0 -m 0644 lxc-wrapper.1.gz /usr/share/man/man1/
 
 bin:
 	@mkdir bin
