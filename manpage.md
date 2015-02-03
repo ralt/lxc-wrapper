@@ -1,3 +1,7 @@
+% LXC-WRAPPER(1) lxc-wrapper man page
+% Florian Margaine <florian@margaine.com>
+% February 2, 2015
+
 # NAME
 
 lxc-wrapper - Wrapper around lxc for an opinionated workflow.
@@ -77,7 +81,3 @@ Notably, it automatically takes care of networking.
 # BUGS
 
 If you find any bug, please send your reports to lxc-wrapper@googlegroups.com
-
-# AUTHOR
-
-Florian Margaine (florian@margaine.com)
