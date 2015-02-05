@@ -96,7 +96,6 @@ Commands:
   (format t "
 	Overridable variables and default values for all commands (must be BEFORE the command):
 		--default-shell=/bin/bash
-		--debug
 
 "))
 

@@ -81,3 +81,31 @@
       (cl-ppcre:scan-to-strings "\\n\\s*lxc\\.utsname\\s*=\\s*(\\w+)" config)
     (declare (ignore match))
     (elt name 0)))
+
+(defun lxc-config-has-autostart (content)
+  "Finds out if a content holds the autostart line"
+  (cl-ppcre:scan "lxc\\.start\\.auto" content))
+
+(defun toggle-autostart-value (file content)
+  "Toggles the autostart value"
+  (let ((value (parse-integer
+		(elt
+		 (multiple-value-bind (match val)
+		     (cl-ppcre:scan-to-strings "lxc\\.start\\.auto\\s*=\\s*(\\d+)"
+					       content)
+		   (declare (ignore match))
+		   val)
+		 0))))
+    (alexandria:write-string-into-file
+     (cl-ppcre:regex-replace "lxc\\.start\\.auto\\s*=\\s*\\d+"
+			     content
+			     (format nil
+				     "lxc.start.auto = ~A"
+				     (if (= value 0) 1 0)))
+     file
+     :if-exists :overwrite)))
+
+(defun add-autostart-line (file)
+  "Adds the autostart line in the file"
+  (with-open-file (f file :direction :output :if-exists :append)
+    (format f "lxc.start.auto = 1")))

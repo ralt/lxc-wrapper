@@ -133,6 +133,25 @@
       (format t " done.~%")
       (init-lxc cli-name *hosts-file*))))
 
+(defcommand autostart (name args)
+  "autostart NAME
+	Toggles the autostart status of the container named NAME
+
+	Overridable variables and default values (must be BEFORE the command):
+		--lxc-default-folder=/var/lib/lxc/
+		--lxc-config=config"
+  (declare (ignore args))
+  (let* ((cli-name (adapt-arg name))
+	 (lxc-path (merge-pathnames *lxc-config*
+				    (merge-pathnames
+				     (concatenate 'string cli-name "/")
+				     *lxc-default-folder*)))
+	 (config-content (alexandria:read-file-into-string
+			  lxc-path)))
+    (if (lxc-config-has-autostart config-content)
+	(toggle-autostart-value lxc-path config-content)
+	(add-autostart-line lxc-path))))
+
 (defun adapt-arg (name)
   "Adapts an argument to string"
   (when (symbolp name)

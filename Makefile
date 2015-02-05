@@ -50,7 +50,7 @@ rpm: $(APP_OUT)
 
 install: $(APP_OUT)
 	install $(APP_OUT) $(DESTDIR)/usr/bin
-	install -g 0 -o 0 -m 0644 lxc-wrapper.1.gz /usr/share/man/man1/
+	install -g 0 -o 0 -m 0644 dist/root/usr/share/man/man1/lxc-wrapper.1.gz /usr/share/man/man1/
 
 bin:
 	@mkdir bin
