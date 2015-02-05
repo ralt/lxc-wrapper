@@ -376,6 +376,15 @@ Packages an LXC into an shareable archive file.
 
 Deploys an archive created by `lxc-wrapper package`.
 
+#### `autostart`
+
+```lisp
+(defcommand autostart (name args)
+  "Toggles the autostart setting of a container"
+```
+
+Toggles the autostart setting of a container.
+
 ### Variables
 
 Variables are used throughout the code to be able to customize them
