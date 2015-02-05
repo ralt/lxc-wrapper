@@ -75,6 +75,13 @@ Notably, it automatically takes care of networking.
 			--lxc-config=config
 			--hosts-file=/etc/hosts
 
+	autostart NAME
+		Toggles the autostart status of the container named NAME
+
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-default-folder=/var/lib/lxc/
+			--lxc-config=config
+
 	Overridable variables and default values for all commands (must be BEFORE the command):
 		--default-shell=/bin/bash
 

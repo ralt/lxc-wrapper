@@ -158,66 +158,73 @@ Wrapper around lxc for an opinionated workflow.
 
 Commands:
 
-        help
-                Shows this help
+	help
+		Shows this help
 
-        create NAME
-                Creates a container named NAME
+	create NAME
+		Creates a container named NAME
 
-                Options (must be BEFORE the command):
-                        --base=BASE
-                                Clones the BASE container
-                        --template=TEMPLATE
-                                Uses the TEMPLATE lxc template
+		Options (must be BEFORE the command):
+			--base=BASE
+				Clones the BASE container
+			--template=TEMPLATE
+				Uses the TEMPLATE lxc template
 
-                Overridable variables and default values (must be BEFORE the command):
-                        --lxc-default-folder=/var/lib/lxc/
-                        --lxc-rootfs=rootfs/
-                        --lxc-folder=~/lxc/
-                        --lxc-host-extension=.lxc
-                        --default-dns-nameserver=8.8.8.8
-                        --hosts-file=/etc/hosts
-                        --lxc-interfaces-file=etc/network/interfaces
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-default-folder=/var/lib/lxc/
+			--lxc-rootfs=rootfs/
+			--lxc-folder=~/lxc/
+			--lxc-host-extension=.lxc
+			--default-dns-nameserver=8.8.8.8
+			--hosts-file=/etc/hosts
+			--lxc-interfaces-file=etc/network/interfaces
 
-        start NAME
-                Starts the container named NAME
+	start NAME
+		Starts the container named NAME
 
-        stop NAME
-                Stops the container named NAME
+	stop NAME
+		Stops the container named NAME
 
-        ls
-                Lists the containers
+	ls
+		Lists the containers
 
-        destroy NAME
-                Destroys the container named NAME
+	destroy NAME
+		Destroys the container named NAME
 
-                Overridable variables and default values (must be BEFORE the command):
-                        --lxc-folder=~/lxc/
-                        --lxc-host-extension=.lxc
-                        --hosts-file=/etc/hosts
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-folder=~/lxc/
+			--lxc-host-extension=.lxc
+			--hosts-file=/etc/hosts
 
-        package NAME
-                Packages the container named NAME
+	package NAME
+		Packages the container named NAME
 
-                Options (must be BEFORE the command):
-                        --archive-path=PATH
-                                the path of the archive
+		Options (must be BEFORE the command):
+			--archive-path=PATH
+				the path of the archive
 
-                Overridable variables and default values (must be BEFORE the command):
-                        --lxc-package-extension=.tar.gz
-                        --lxc-default-folder=/var/lib/lxc/
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-package-extension=.tar.gz
+			--lxc-default-folder=/var/lib/lxc/
 
-        deploy --archive ARCHIVE NAME
-                Deploys the ARCHIVE archive in a container named NAME
+	deploy --archive ARCHIVE NAME
+		Deploys the ARCHIVE archive in a container named NAME
 
-                Overridable variables and default values (must be BEFORE the command):
-                        --lxc-default-folder=/var/lib/lxc/
-                        --lxc-config=config
-                        --hosts-file=/etc/hosts
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-default-folder=/var/lib/lxc/
+			--lxc-config=config
+			--hosts-file=/etc/hosts
 
-        Overridable variables and default values for all commands (must be BEFORE the c
+	autostart NAME
+		Toggles the autostart status of the container named NAME
+
+		Overridable variables and default values (must be BEFORE the command):
+			--lxc-default-folder=/var/lib/lxc/
+			--lxc-config=config
+
+	Overridable variables and default values for all commands (must be BEFORE the c
 ommand):
-                --default-shell=/bin/bash
+		--default-shell=/bin/bash
 
 ```
 
