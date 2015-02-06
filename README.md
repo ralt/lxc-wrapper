@@ -6,7 +6,6 @@ An opinionated LXC wrapper.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [LX-What?](#lx-what)
 - [Motivation](#motivation)
@@ -27,6 +26,7 @@ An opinionated LXC wrapper.
     - [`ls`](#ls)
     - [`package`](#package)
     - [`deploy`](#deploy)
+    - [`autostart`](#autostart)
   - [Variables](#variables)
     - [`*lxc-default-folder*`](#lxc-default-folder)
     - [`*lxc-rootfs*`](#lxc-rootfs)
