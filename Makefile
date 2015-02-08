@@ -17,8 +17,10 @@ TEST_SOURCES=$(shell find test/ -name '*.lisp')
 
 all: $(APP_OUT)
 
-test: $(TEST_SOURCES)
-	@sbcl --eval '(ql:quickload :lxc-wrapper)' \
+test: $(TEST_SOURCES) $(QL_LOCAL)/setup.lisp install-deps
+	@sbcl $(QL_OPTS) \
+		--eval '(ql:quickload :fiveam)' \
+		--eval '(ql:quickload :lxc-wrapper)' \
 		--eval '(asdf:test-system :lxc-wrapper)' \
 		--quit
 
